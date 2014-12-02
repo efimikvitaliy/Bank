@@ -1,4 +1,4 @@
-package Entities;
+package BusinessService.Entities;
 
 import java.util.ArrayList;
 
