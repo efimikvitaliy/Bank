@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,10 +17,12 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.Border;
 
-import Entities.*;
+import BusinessService.Entities.*;
 import Application.Controllers.*;
 import Application.Forms.*;
 import Database.*;
+
+
 
 /**
  * @author User
@@ -30,9 +34,9 @@ public class LoginForm  {
 	public LoginController m_LoginController;
 	JFrame loginForm;
 	
-	public LoginForm(){
+	public LoginForm(LoginController loginController){
+		m_LoginController = loginController;
 		loginForm = new JFrame("Login");
-		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		System.out.println("Hello from login");
 		init();
@@ -40,7 +44,16 @@ public class LoginForm  {
 
 	public void init(){
 		JPanel panel = new JPanel(), loginPanel = new JPanel(), passwordPanel = new JPanel(), buttonPanel = new JPanel();
-		JButton loginButton = new JButton(" Login");
+		JButton loginButton = new JButton("Login");
+		loginButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				
+			}});
+		
 		JTextField loginPane = new JTextField();
 		JTextField passwordPane = new JTextField();
 		panel.setLayout(new GridLayout(0,1,10,10));
@@ -110,7 +123,7 @@ public class LoginForm  {
 		panel.add(new JLabel());
 		loginForm.add(panel);
 		loginForm.setSize(500,500);
-		loginForm.setVisible(true);
+		
 		System.out.println("Hello from init");
 	}
 	/*public void finalize() throws Throwable {
@@ -121,8 +134,8 @@ public class LoginForm  {
 	 * 
 	 * @param b
 	 */
-	public void show(boolean b){
-		
+	public void setVisible(boolean b){
+		loginForm.setVisible(b);
 		
 	}
 

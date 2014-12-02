@@ -1,6 +1,10 @@
 package Application.Forms;
+import BusinessService.Entities.*;
+import Application.Controllers.*;
+import Application.Forms.*;
+import Database.*;
 
-import Entities.*;
+
 import Application.Controllers.*;
 import Application.Forms.*;
 import Database.*;

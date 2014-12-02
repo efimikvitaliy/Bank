@@ -1,5 +1,5 @@
 package Application.Controllers;
-import Entities.*;
+import BusinessService.Entities.*;
 import Application.Forms.*;
 import Database.*;
 

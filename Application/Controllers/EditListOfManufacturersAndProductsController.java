@@ -1,9 +1,11 @@
 package Application.Controllers;
-import Entities.*;
+import BusinessService.Entities.*;
 import Application.Forms.*;
 import Database.*;
 
-import Entities.ManufacturersAndProducts;
+import Application.Forms.*;
+import Database.*;
+
 
 /**
  * @author User

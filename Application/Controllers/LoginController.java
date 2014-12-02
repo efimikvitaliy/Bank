@@ -1,5 +1,5 @@
 package Application.Controllers;
-import Entities.*;
+import BusinessService.Entities.*;
 import Application.Forms.*;
 import Database.*;
 
@@ -16,7 +16,8 @@ public class LoginController {
 	public UserDAO m_UserDAO;
 
 	public LoginController(){
-
+		m_LoginForm = new LoginForm(this);
+		m_LoginForm.setVisible(true);
 	}
 
 	public void finalize() throws Throwable {
