@@ -1,48 +1,71 @@
 package Application.Controllers;
-import BusinessService.Entities.*;
-import Application.Forms.*;
-import Database.*;
 
+import java.sql.SQLException;
+import javax.swing.SwingUtilities;
+import Application.Forms.LoginForm;
+import BusinessService.Entities.User;
+import Database.UserDAO;
 
-/**
- * @author user
- * @version 1.0
- * @created 01-дек-2014 23:48:05
- */
-public class LoginController {
-
-	public LoginForm m_LoginForm;
-	public User m_User;
-	public UserDAO m_UserDAO;
-
-	public LoginController(){
-		m_LoginForm = new LoginForm(this);
+public class LoginController
+{
+	private User m_User;
+	private UserDAO m_UserDAO;
+	private LoginForm m_LoginForm;
+	
+	public LoginController(){}
+	public boolean isManager(int type)
+	{
+		boolean b = false;
+		switch(type)
+		{
+		case 1:
+			b = true;
+			LoginForm.showInterfaceOfTransportManager();
+			break;
+		case 2:
+			b = true;
+			LoginForm.showInterfaceOfManufactureManager();
+			break;
+		case 3:
+			b = true;
+			LoginForm.showInterfaceOfClientManager();
+			break;
+		case 4:
+			b = true;
+			LoginForm.showInterfaceOfCatalogManager();
+			break;
+		}
+		return b;
+	}
+	public void login(String name, String password) throws SQLException
+	{
+		m_User = User.create(name, password);
+		m_UserDAO = new UserDAO();
+		int type = m_UserDAO.getTypeOfUserWithThisLoginAndPassword(m_User);
+		m_User.setType(type);
+	}
+	public void showLoginForm()
+	{
+		m_LoginForm = new LoginForm();
 		m_LoginForm.setVisible(true);
 	}
-
-	public void finalize() throws Throwable {
-
+	public void setUser(User u)
+	{
+		m_User = u;
 	}
-
-	/**
-	 * 
-	 * @param type
-	 */
-	public boolean isManager(int type){
-		return false;
+	public User getUser()
+	{
+		return m_User;
 	}
-
-	/**
-	 * 
-	 * @param name
-	 * @param password
-	 */
-	public void login(String name, String password){
-
+	public static void main(String[] args)
+	{
+		SwingUtilities.invokeLater(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				(new LoginController()).showLoginForm();
+			}
+		});
 	}
-
-	public void showLoginForm(){
-
-	}
-
 }
