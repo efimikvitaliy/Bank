@@ -1,29 +1,32 @@
 package Database;
 
-import BusinessService.Entities.*;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import BusinessService.Entities.User;
 
-
-/**
- * @author user
- * @version 1.0
- * @created 01-дек-2014 23:51:15
- */
-public class UserDAO {
-
-	public UserDAO(){
-
+public class UserDAO
+{
+    private Connection con = null;
+    private Statement stmt = null;
+    private ResultSet r = null;
+    
+	public UserDAO()
+	{
+        con = DBManager.getInstance().getConnection();
 	}
-
-	public void finalize() throws Throwable {
-
+	public int getTypeOfUserWithThisLoginAndPassword(User user) throws SQLException
+	{
+        stmt = con.createStatement();
+        r = stmt.executeQuery("SELECT * FROM USER WHERE login = '" + user.getLogin() + "' AND password = '" + user.getPassword() + "'");
+        int type = 0;
+        if(r.next())
+        {
+        	type = Integer.valueOf(r.getString("type"));
+        }
+        r.close();
+        stmt.close();
+		return type;
 	}
-
-	/**
-	 * 
-	 * @param user
-	 */
-	public int getTypeOfUserWithThisLoginAndPassword(User user){
-		return 0;
-	}
-
 }
