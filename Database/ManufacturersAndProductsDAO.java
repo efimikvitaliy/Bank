@@ -1,6 +1,6 @@
 package Database;
 
-import Entities.*;
+import BusinessService.Entities.*;
 
 
 
