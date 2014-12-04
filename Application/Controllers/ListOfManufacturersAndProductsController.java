@@ -1,54 +1,39 @@
 package Application.Controllers;
-import BusinessService.Entities.*;
-import Application.Forms.*;
-import Database.*;
 
-import Application.Forms.*;
-import Database.*;
+import java.sql.SQLException;
 
-/**
- * @author User
- * @version 1.0
- * @created 01-дек-2014 23:48:04
- */
+import Application.Forms.ListOfManufacturersAndProductsForm;
+import BusinessService.Entities.ManufacturersAndProducts;
+import BusinessService.Entities.ListOfManufacturersAndProducts;
+import Database.ManufacturersAndProductsDAO;
+
 public class ListOfManufacturersAndProductsController {
 
 	public ListOfManufacturersAndProductsForm m_ListOfManufacturersAndProductsForm;
-	public RequestListOfManufacturersAndProductsForm m_RequestListOfManufacturersAndProductsForm;
 	public ManufacturersAndProductsDAO m_ManufacturersAndProductsDAO;
 	public ManufacturersAndProducts m_ManufacturersAndProducts;
 	public ListOfManufacturersAndProducts m_ListOfManufacturersAndProducts;
 
-	public ListOfManufacturersAndProductsController(){
-
+	public ListOfManufacturersAndProductsController(){}
+	public ListOfManufacturersAndProductsController getList()
+	{
+		return null;
 	}
-
-	public void finalize() throws Throwable {
-
+	public boolean listIsExist()
+	{
+		try
+		{
+			m_ManufacturersAndProductsDAO = new ManufacturersAndProductsDAO();
+			m_ManufacturersAndProductsDAO.getListOfManufacturersAndProducts();
+		}
+		catch(SQLException e1)
+		{
+			return false;
+		}
+		return true;
 	}
-
-	public void getList(){
-
+	public void createList() throws SQLException
+	{
+		m_ManufacturersAndProductsDAO.createListOfManufacturersAndProducts();
 	}
-
-	/**
-	 * 
-	 * @param list
-	 */
-	public boolean listIsExist(ListOfManufacturersAndProducts list){
-		return false;
-	}
-
-	/**
-	 * 
-	 * @param list
-	 */
-	public void saveList(ListOfManufacturersAndProducts list){
-
-	}
-
-	public void showRequestListOfManufacturersAndProductsForm(){
-
-	}
-
 }
