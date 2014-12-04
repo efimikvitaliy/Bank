@@ -161,8 +161,9 @@ public class OrderForm
 		jlist = new JList<>();
 		jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jsp1 = new JScrollPane(jlist);
-		jsp1.setPreferredSize(new Dimension(120, 90));
+		jsp1.setPreferredSize(new Dimension(250, 190));
 		gbc.insets = new Insets(0,0,0,0);
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.weightx = 0.0;
 		gbc.weighty = 1.0;
 		gbc.gridx = 1;
@@ -171,6 +172,7 @@ public class OrderForm
 		jdl1.add(jsp1);
 		
 		jb1 = new JButton("OK");
+		gbc.gridwidth = 1;
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbl.setConstraints(jb1, gbc);
@@ -189,8 +191,9 @@ public class OrderForm
 		
 		jlist1 = new JList<>();
 		jlist1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jsp3 = new JScrollPane(jlist);
-		jsp3.setPreferredSize(new Dimension(120, 90));
+		jsp3 = new JScrollPane(jlist1);
+		jsp3.setPreferredSize(new Dimension(250, 190));
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.weightx = 0.0;
 		gbc.weighty = 1.0;
 		gbc.gridx = 1;
@@ -199,6 +202,7 @@ public class OrderForm
 		jdl4.add(jsp3);
 		
 		jb7 = new JButton("OK");
+		gbc.gridwidth = 1;
 		gbc.gridx = 1;
 		gbc.gridy = 2;
 		gbl.setConstraints(jb7, gbc);
@@ -208,7 +212,7 @@ public class OrderForm
     	gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbl.setConstraints(jb8, gbc);
-		jdl1.add(jb8);
+		jdl4.add(jb8);
 		
 		jb1.addActionListener(new ActionListener()
 		{
@@ -428,9 +432,8 @@ public class OrderForm
 		}
 		jdl1.setVisible(true);
 	}
-	public void showListOfOrder(int i)
+	public void showListOfOrderEdit()
 	{
-		editOrDelete = i;
 		try
 		{
 			ListOfOrders list = m_EditOrderController.getListOfOrders();
@@ -448,35 +451,80 @@ public class OrderForm
 			JOptionPane.showMessageDialog(jf, "The database is not available");
 			return;
 		}
-		jb5.addActionListener(new ActionListener()
+		jb7.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				/*if(orderIndex != -1)
+				{
+					
+				}
+				catch(SQLException e1)
+				{
+					JOptionPane.showMessageDialog(jf, "The database is not available");
+					return;
+				}*/
+			}
+		});
+		jb8.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				jdl4.setVisible(false);
+			}
+		});
+		jdl4.setVisible(true);
+	}
+	public void showListOfOrderDelete()
+	{
+		try
+		{
+			ListOfOrders list = m_EditOrderController.getListOfOrders();
+			s = list.getElementsInStringArray();
+			DefaultListModel<String> model = new DefaultListModel<>();
+			for(String str: s)
+			{
+				model.addElement(str);
+			}
+			jlist1.setModel(model);
+			obj = list;
+		}
+		catch(SQLException e1)
+		{
+			JOptionPane.showMessageDialog(jf, "The database is not available");
+			return;
+		}
+		jb7.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				if(orderIndex != -1)
 				{
-					if(editOrDelete == 0)
+					try
 					{
-/*						try
+						int res = JOptionPane.showConfirmDialog(jf, "Do you want delete this order?", "Exit", JOptionPane.YES_NO_OPTION);
+						switch(res)
 						{
-							String str = ((ListOfOrders) obj).get(orderIndex).getId();
-							client = m_CreateOrderController.getClient(str);
-							jdl4.setVisible(false);
-            				m_CreateOrderController.showCatalogForm();
+						case JOptionPane.YES_OPTION:
+							m_EditOrderController.deleteOrder(s[orderIndex]);
+							break;
+						case JOptionPane.NO_OPTION:
+							break;
 						}
-						catch(SQLException e1)
-						{
-							JOptionPane.showMessageDialog(jf, "The database is not available");
-						}*/
+						jdl4.setVisible(false);
 					}
-					else if(editOrDelete == 1)
+					catch(SQLException e1)
 					{
-						
+						JOptionPane.showMessageDialog(jf, "The database is not available");
+						return;
 					}
 				}
 			}
 		});
-		jb6.addActionListener(new ActionListener()
+		jb8.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
