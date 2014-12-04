@@ -1,72 +1,49 @@
 package BusinessService.Entities;
 
-/**
- * @author Владимир
- * @version 1.0
- * @created 01-дек-2014 23:50:13
- */
-public class CatalogRecord {
-
+public class CatalogRecord
+{
 	private String id;
 	private String information;
 	private int price;
-	private Product product;
-	public Product m_Product;
+	private ManufacturersAndProducts product;
 
-
-
-	public void finalize() throws Throwable {
-
+	public CatalogRecord(){}
+	public CatalogRecord(int price, String information, ManufacturersAndProducts product)
+	{
+		this.price = price;
+		this.information = information;
+		this.product = product;
 	}
-
-	public CatalogRecord(){
-
-	}
-
-	/**
-	 * 
-	 * @param price
-	 * @param information
-	 * @param product
-	 */
-	public CatalogRecord(int price, String information, Product product){
-
-	}
-
-	public String getInformation(){
+	public String getInformation()
+	{
 		return information;
 	}
-
-	public int getPrice(){
+	public int getPrice()
+	{
 		return price;
 	}
-
-	public Product getProduct(){
+	public ManufacturersAndProducts getProduct()
+	{
 		return product;
 	}
-
-	/**
-	 * 
-	 * @param newVal
-	 */
-	public void setInformation(String newVal){
+	public void setInformation(String newVal)
+	{
 		information = newVal;
 	}
-
-	/**
-	 * 
-	 * @param newVal
-	 */
-	public void setPrice(int newVal){
+	public void setPrice(int newVal)
+	{
 		price = newVal;
 	}
-
-	/**
-	 * 
-	 * @param newVal
-	 */
-	public void setProduct(Product newVal){
+	public void setProduct(ManufacturersAndProducts newVal)
+	{
 		product = newVal;
 	}
-
+	public String getId()
+	{
+		return id;
+	}
+	public void setId(String id)
+	{
+		this.id = id;
+	}
 }
