@@ -2,61 +2,49 @@ package BusinessService.Entities;
 
 import java.util.ArrayList;
 
-/**
- * @author User
- * @version 1.0
- * @created 01-дек-2014 23:50:11
- */
-public class Catalog {
-
+public class Catalog
+{
 	private String information;
 	private ArrayList<CatalogRecord> records;
 	public CatalogRecord m_CatalogRecord;
 
-
-
-	public void finalize() throws Throwable {
-
+	public Catalog()
+	{
+		records = new ArrayList<>();
 	}
-
-	public Catalog(){
-
+	public void addRecord(CatalogRecord record)
+	{
+		records.add(record);
 	}
-
-	/**
-	 * 
-	 * @param record
-	 */
-	public void addRecord(CatalogRecord record){
-
+	public void deleteRecord(CatalogRecord record)
+	{
+		records.remove(record);
 	}
-
-	/**
-	 * 
-	 * @param record
-	 */
-	public void deleteRecord(CatalogRecord record){
-
-	}
-
-	public String getInformation(){
+	public String getInformation()
+	{
 		return information;
 	}
-
-	/**
-	 * 
-	 * @param newVal
-	 */
-	public void setInformation(String newVal){
+	public void setInformation(String newVal)
+	{
 		information = newVal;
 	}
-
-	/**
-	 * 
-	 * @param record
-	 */
-	public void updateRecord(CatalogRecord record){
+	public String[] getElementsInStringArray()
+	{
+		String []s = new String[records.size()];
+		int i = 0;
+		for(CatalogRecord m: records)
+		{
+			s[i] = new String("Manufacturer: " + m.getProduct().getManufacturers() + ", Product: " + m.getProduct().getProducts() + ", Price: " + m.getPrice() + ", Count: " + m.getProduct().getCount());
+			++i;
+		}
+		return s;
+	}
+	public int size()
+	{
+		return records.size();
+	}
+	public void updateRecord(CatalogRecord record)
+	{
 
 	}
-
 }
