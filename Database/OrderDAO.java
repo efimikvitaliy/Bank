@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import BusinessService.Entities.Catalog;
 import BusinessService.Entities.CatalogRecord;
+import BusinessService.Entities.Client;
 import BusinessService.Entities.ListOfOrders;
 import BusinessService.Entities.ManufacturersAndProducts;
 import BusinessService.Entities.Order;
@@ -21,19 +22,41 @@ public class OrderDAO
 	{
 		con = DBManager.getInstance().getConnection();
 	}
-	public void deleteOrder(String name)
+	public void deleteOrder(String str) throws SQLException
 	{
-
+		stmt = con.createStatement();
+		String fname = str.substring(0, str.indexOf(" ")).trim();
+		String sname = str.substring(str.indexOf(" "), str.indexOf(",")).trim();
+		String address = str.substring(str.indexOf(",") + 1, str.lastIndexOf(",")).trim();
+		String email = str.substring(str.lastIndexOf(",") + 1).trim();
+		r = stmt.executeQuery("SELECT TABLE_ORDER.id FROM TABLE_ORDER, CLIENT " +
+				              "WHERE TABLE_ORDER.client_id = CLIENT.id AND CLIENT.firstName = '" + fname +
+				              "' AND CLIENT.secondName = '" + sname + "' AND CLIENT.address = '" + address + 
+				              "' AND CLIENT.email = '" + email + "'");
+		if(r.next())
+		{
+			int id = Integer.valueOf(r.getString("id"));
+			stmt.executeUpdate("DELETE FROM ORDER_LINE WHERE order_id = " + id);
+			stmt.executeUpdate("DELETE FROM TABLE_ORDER WHERE id = " + id);
+		}
+		else
+		{
+			throw new SQLException();
+		}
+		r.close();
+        stmt.close();
 	}
 	public ListOfOrders getListOfOrder() throws SQLException
 	{
 		ListOfOrders array = new ListOfOrders();
 		stmt = con.createStatement();
-		int order_id = 0;
-		r = stmt.executeQuery("SELECT * FROM TABLE_ORDER, CLIENT WHERE TABLE_ORDER.client_id = CLIENT.id");
+		r = stmt.executeQuery("SELECT CLIENT.id, CLIENT.firstName, CLIENT.secondName, CLIENT.address, CLIENT.email FROM TABLE_ORDER, CLIENT WHERE TABLE_ORDER.client_id = CLIENT.id");
 		while(r.next())
 		{
-			Order order = new Order();
+			Client client = new Client(r.getString("id"), r.getString("firstName"), r.getString("secondName"));
+			client.setAddress(r.getString("address"));
+			client.setEmail(r.getString("email"));
+			Order order = new Order(0, null, client);
 			array.add(order);
 		}
         r.close();
