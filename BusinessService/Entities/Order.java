@@ -2,53 +2,57 @@ package BusinessService.Entities;
 
 import java.util.ArrayList;
 
-/**
- * @author User
- * @version 1.0
- * @created 01-дек-2014 23:50:22
- */
-public class Order {
-
+public class Order
+{
 	private Client client;
 	private int id;
-	private ArrayList<Product> listOfProducts;
+	private ArrayList<CatalogRecord> listOfProducts;
 	private int price;
 	public Client m_Client;
 
-
-
-	public void finalize() throws Throwable {
-
+	public Order(){}
+	public Order(int price, ArrayList<CatalogRecord> list, Client client)
+	{
+		this.price = price;
+		listOfProducts = list;
+		this.client = client;
 	}
-
-	/**
-	 * 
-	 * @param price
-	 * @param list
-	 * @param client
-	 */
-	public Order(int price, ArrayList<Product> list, Client client){
-
+	public int getId()
+	{
+		return id;
 	}
-
-	public Order(){
-
+	public void setId(int id)
+	{
+		this.id = id;
 	}
-
-	/**
-	 * 
-	 * @param company
-	 */
+	public Client getClient()
+	{
+		return client;
+	}
+	public void setClient(Client client)
+	{
+		this.client = client;
+	}
+	public int getPrice()
+	{
+		return price;
+	}
+	public void setPrice(int price)
+	{
+		this.price = price;
+	}
+	public ArrayList<CatalogRecord> getListOfProducts() {
+		return listOfProducts;
+	}
+	public void setListOfProducts(ArrayList<CatalogRecord> listOfProducts) {
+		this.listOfProducts = listOfProducts;
+	}
+	
 	public void setTransportCompanyToDeliver(TransportCompany company){
 
 	}
 
-	/**
-	 * 
-	 * @param company
-	 */
 	public void setTransportCompanyToDeliverReturn(TransportCompany company){
 
 	}
-
 }
