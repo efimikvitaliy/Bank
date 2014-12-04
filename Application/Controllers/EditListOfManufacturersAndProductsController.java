@@ -1,89 +1,64 @@
 package Application.Controllers;
-import BusinessService.Entities.*;
-import Application.Forms.*;
-import Database.*;
 
-import Application.Forms.*;
-import Database.*;
+import java.sql.SQLException;
+import Application.Forms.EditListOfManufacturersAndProductsForm;
+import Application.Forms.ListOfManufacturersAndProductsForm;
+import BusinessService.Entities.ListOfManufacturersAndProducts;
+import BusinessService.Entities.ManufacturersAndProducts;
+import Database.ManufacturersAndProductsDAO;
 
-
-/**
- * @author User
- * @version 1.0
- * @created 01-дек-2014 23:47:59
- */
-public class EditListOfManufacturersAndProductsController {
-
+public class EditListOfManufacturersAndProductsController
+{
 	public ListOfManufacturersAndProducts m_ListOfManufacturersAndProducts;
 	public ManufacturersAndProducts m_ManufacturersAndProducts;
 	public ManufacturersAndProductsDAO m_ManufacturersAndProductsDAO;
-	public EditListOfManufacturersAndProductsOperationForm m_EditListOfManufacturersAndProductsOperationForm;
 	public EditListOfManufacturersAndProductsForm m_EditListOfManufacturersAndProductsForm;
 	public ListOfManufacturersAndProductsForm m_ListOfManufacturersAndProductsForm;
 
-	public EditListOfManufacturersAndProductsController(){
+	public EditListOfManufacturersAndProductsController()
+	{
+		m_ManufacturersAndProductsDAO = new ManufacturersAndProductsDAO();
+	}
+	public void add(ManufacturersAndProducts m) throws SQLException
+	{
+		m_ListOfManufacturersAndProducts = m_ManufacturersAndProductsDAO.getListOfManufacturersAndProducts();
+		boolean b = m_ListOfManufacturersAndProducts.itemIsContainedInTheList(m); 
+		if(m.getId() == -1 && !b)
+		{
+			m.setId(m_ListOfManufacturersAndProducts.getMaxId());
+			m_ManufacturersAndProductsDAO.add(m);
+		}
+		else if(m.getId() != -1)
+		{
+			m_ManufacturersAndProductsDAO.update(m);
+		}
+	}
+	public void create(String m, String p)
+	{
 
 	}
-
-	public void finalize() throws Throwable {
+	public void deleteListOfManufacturersAndProducts() throws SQLException
+	{
+		m_ManufacturersAndProductsDAO.deleteListOfManufacturersAndProducts();
+	}
+	public void deleteManufacturersAndProducts(int index) throws SQLException
+	{
+		m_ManufacturersAndProductsDAO.delete(index);
+	}
+	public ListOfManufacturersAndProducts getListOfManufacturersAndProducts() throws SQLException
+	{
+		return m_ManufacturersAndProductsDAO.getListOfManufacturersAndProducts();
+	}
+	public void saveListOfManufacturersAndProducts(ListOfManufacturersAndProducts list)
+	{
 
 	}
-
-	/**
-	 * 
-	 * @param m
-	 */
-	public void add(ManufacturersAndProducts m){
-
+	public void showEditListOfManufacturersAndProductsForm()
+	{
+		
 	}
-
-	/**
-	 * 
-	 * @param m
-	 * @param p
-	 */
-	public void create(String m, String p){
-
+	public void showListOfManufacturersAndProductsForm()
+	{
+	
 	}
-
-	public void deleteListOfManufacturersAndProducts(){
-
-	}
-
-	/**
-	 * 
-	 * @param obj
-	 */
-	public void deleteManufacturersAndProducts(ManufacturersAndProducts obj){
-
-	}
-
-	public boolean formIsFill(){
-		return false;
-	}
-
-	public ListOfManufacturersAndProducts getListOfManufacturersAndProducts(){
-		return null;
-	}
-
-	/**
-	 * 
-	 * @param list
-	 */
-	public void saveListOfManufacturersAndProducts(ListOfManufacturersAndProducts list){
-
-	}
-
-	public void showEditListOfManufacturersAndProductsForn(){
-
-	}
-
-	public void showEditListOfManufacturersAndProductsOperationForn(){
-
-	}
-
-	public void showListOfManufacturersAndProductsForn(){
-
-	}
-
 }
