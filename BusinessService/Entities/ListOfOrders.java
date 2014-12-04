@@ -2,32 +2,29 @@ package BusinessService.Entities;
 
 import java.util.ArrayList;
 
-/**
- * @author User
- * @version 1.0
- * @created 01-дек-2014 23:50:17
- */
-public class ListOfOrders {
-
+public class ListOfOrders
+{
 	private ArrayList<Order> list;
 	public Order m_Order;
-
-
-
-	public void finalize() throws Throwable {
-
+	
+	public ListOfOrders()
+	{
+		list = new ArrayList<>();
 	}
-
-	public ListOfOrders(){
-
-	}
-
-	/**
-	 * 
-	 * @param order
-	 */
-	public boolean deleteOrder(Order order){
+	public boolean deleteOrder(Order order)
+	{
 		return false;
 	}
-
+	public Order get(int index)
+	{
+		return list.get(index);
+	}
+	public void add(Order order)
+	{
+		list.add(order);
+	}
+	public void remove(Order order)
+	{
+		list.remove(order);
+	}	
 }
