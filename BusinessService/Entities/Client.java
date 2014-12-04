@@ -1,72 +1,56 @@
 package BusinessService.Entities;
 
-/**
- * @author User
- * @version 1.0
- * @created 01-дек-2014 23:50:09
- */
-public class Client {
-
+public class Client
+{
 	private String address;
 	private String email;
 	private String FirstName;
 	private String id;
 	private String SecondName;
 
-	public Client(){
-
+	public Client(){}
+	public Client(String id, String FirstName, String SecondName)
+	{
+		this.setId(id);
+		this.FirstName = FirstName;
+		this.SecondName = SecondName;
 	}
-
-	public void finalize() throws Throwable {
-
-	}
-
-	public String getAddress(){
+	public String getAddress()
+	{
 		return address;
 	}
-
-	public String getEmail(){
+	public String getEmail()
+	{
 		return email;
 	}
-
-	public String getFirstName(){
+	public String getFirstName()
+	{
 		return FirstName;
 	}
-
-	public String getSecondName(){
+	public String getSecondName()
+	{
 		return SecondName;
 	}
-
-	/**
-	 * 
-	 * @param newVal
-	 */
-	public void setAddress(String newVal){
+	public void setAddress(String newVal)
+	{
 		address = newVal;
 	}
-
-	/**
-	 * 
-	 * @param newVal
-	 */
-	public void setEmail(String newVal){
+	public void setEmail(String newVal)
+	{
 		email = newVal;
 	}
-
-	/**
-	 * 
-	 * @param newVal
-	 */
-	public void setFirstName(String newVal){
+	public void setFirstName(String newVal)
+	{
 		FirstName = newVal;
 	}
-
-	/**
-	 * 
-	 * @param newVal
-	 */
-	public void setSecondName(String newVal){
+	public void setSecondName(String newVal)
+	{
 		SecondName = newVal;
 	}
-
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 }
