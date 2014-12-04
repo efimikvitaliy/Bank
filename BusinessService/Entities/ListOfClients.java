@@ -2,24 +2,32 @@ package BusinessService.Entities;
 
 import java.util.ArrayList;
 
-/**
- * @author User
- * @version 1.0
- * @created 01-дек-2014 23:50:14
- */
-public class ListOfClients {
-
+public class ListOfClients
+{
 	private ArrayList<Client> list;
 	public Client m_Client;
 
-
-
-	public void finalize() throws Throwable {
-
+	public ListOfClients()
+	{
+		list = new ArrayList<>();
 	}
-
-	public void ListOfClients(){
-
+	public Client get(int index)
+	{
+		return list.get(index);
 	}
-
+	public void add(Client client)
+	{
+		list.add(client);
+	}
+	public String[] getElementsInStringArray()
+	{
+		String []s = new String[list.size()];
+		int i = 0;
+		for(Client m: list)
+		{
+			s[i] = new String(m.getFirstName() + ", " + m.getSecondName());
+			++i;
+		}
+		return s;
+	}
 }
