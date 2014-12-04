@@ -1,19 +1,21 @@
 package Application.Controllers;
-import BusinessService.Entities.*;
-import Application.Forms.*;
-import Database.*;
 
-/**
- * @author User
- * @version 1.0
- * @created 01-дек-2014 23:48:02
- */
-public class EditOrderController {
+import java.sql.SQLException;
 
-	public RequestOfDeleteOrderForm m_RequestOfDeleteOrderForm;
+import Application.Forms.CatalogForm;
+import Application.Forms.ListOfOrderForm;
+import Application.Forms.OrderForm;
+import BusinessService.Entities.ListOfOrders;
+import BusinessService.Entities.Order;
+import BusinessService.Entities.Catalog;
+import Database.CatalogDAO;
+import Database.OrderDAO;
+
+public class EditOrderController
+{
+
 	public CatalogForm m_CatalogForm;
-	public OrderForm m_OrderForm;
-	public EditOrderOperationForm m_EditOrderOperationForm;
+	public static OrderForm m_OrderForm;
 	public ListOfOrderForm m_ListOfOrderForm;
 	public ListOfOrders m_ListOfOrders;
 	public Order m_Order;
@@ -21,76 +23,61 @@ public class EditOrderController {
 	public CatalogDAO m_CatalogDAO;
 	public OrderDAO m_OrderDAO;
 
-	public EditOrderController(){
+	public EditOrderController()
+	{
+		m_OrderDAO = new OrderDAO();
+		m_CatalogDAO = new CatalogDAO();
+	}
+	public void deleteOrder(String name) throws SQLException
+	{
+		m_OrderDAO.deleteOrder(name);
+	}
+	public ListOfOrders getListOfOrders() throws SQLException
+	{
+		return m_OrderDAO.getListOfOrder();
+	}
+	public void getOrder(String name)
+	{
 
 	}
-
-	public void finalize() throws Throwable {
-
-	}
-
-	/**
-	 * 
-	 * @param name
-	 */
-	public void deleteOrder(String name){
+	public void newCatalog()
+	{
 
 	}
-
-	public boolean formIsFill(){
-		return false;
-	}
-
-	public ListOfOrders getListOfOrder(){
-		return null;
-	}
-
-	/**
-	 * 
-	 * @param name
-	 */
-	public void getOrder(String name){
+	public void saveOrder(Order order)
+	{
 
 	}
-
-	public void newCatalog(){
-
-	}
-
-	/**
-	 * 
-	 * @param order
-	 */
-	public void saveOrder(Order order){
+	public void showCatalogForm()
+	{
 
 	}
-
-	public void showCatalogForm(){
+	public void showListOfOrderForm(int i)
+	{
+		m_OrderForm = new OrderForm();
+		if(i == 0)
+		{
+			m_OrderForm.showListOfOrderEdit();
+		}
+		else if(i == 1)
+		{
+			m_OrderForm.showListOfOrderDelete();
+		}
+	}
+	public void showOrderForm()
+	{
 
 	}
-
-	public void showListOfOrderForm(){
-
-	}
-
-	public void showOrderForm(){
+	public void showOrderOperationForm()
+	{
 
 	}
-
-	public void showOrderOperationForm(){
-
-	}
-
-	public void showRequestOfDeleteOrderForm(){
+	public void showRequestOfDeleteOrderForm()
+	{
 
 	}
-
-	/**
-	 * 
-	 * @param order
-	 */
-	public void updateOrder(Order order){
+	public void updateOrder(Order order)
+	{
 
 	}
-
 }
