@@ -26,5 +26,19 @@ public class ListOfOrders
 	public void remove(Order order)
 	{
 		list.remove(order);
-	}	
+	}
+	public String[] getElementsInStringArray()
+	{
+		String []s = new String[list.size()];
+		int i = 0;
+		for(Order m: list)
+		{
+			s[i] = new String(m.getClient().getFirstName() + " " 
+		                     + m.getClient().getSecondName() + ", "
+					         + m.getClient().getAddress() + ", "
+					         + m.getClient().getEmail());
+			++i;
+		}
+		return s;
+	}
 }
