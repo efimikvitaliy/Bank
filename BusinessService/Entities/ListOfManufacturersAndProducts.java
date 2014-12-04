@@ -2,40 +2,63 @@ package BusinessService.Entities;
 
 import java.util.ArrayList;
 
-/**
- * @author User
- * @version 1.0
- * @created 01-дек-2014 23:50:16
- */
-public class ListOfManufacturersAndProducts {
+public class ListOfManufacturersAndProducts
+{
+	private ArrayList<ManufacturersAndProducts> list;
+	private ManufacturersAndProducts m_ManufacturersAndProducts;
 
-	private ArrayList<ListOfManufacturersAndProducts> list;
-	public ManufacturersAndProducts m_ManufacturersAndProducts;
-
-
-
-	public void finalize() throws Throwable {
-
+	public ListOfManufacturersAndProducts()
+	{
+		list = new ArrayList<>();
 	}
-
-	public void ListOfManufacturersAndProducts(){
-
+	public void add(ManufacturersAndProducts obj)
+	{
+		list.add(obj);
 	}
-
-	/**
-	 * 
-	 * @param obj
-	 */
-	public void add(ManufacturersAndProducts obj){
-
+	public void delete(ManufacturersAndProducts obj)
+	{
+		list.remove(obj);
 	}
-
-	/**
-	 * 
-	 * @param obj
-	 */
-	public void delete(ManufacturersAndProducts obj){
-
+	public ManufacturersAndProducts get(int index)
+	{
+		return list.get(index);
 	}
-
+	public int size()
+	{
+		return list.size();
+	}
+	public boolean itemIsContainedInTheList(ManufacturersAndProducts p)
+	{
+		for(ManufacturersAndProducts m: list)
+		{
+			if(m.getManufacturers().equals(p.getManufacturers()) && m.getProducts().equals(p.getProducts()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public int getMaxId()
+	{
+		int i = 0;
+		for(ManufacturersAndProducts m: list)
+		{
+			if(m.getId() > i)
+			{
+				i = m.getId();
+			}
+		}
+		return i + 1;
+	}
+	public String[] getElementsInStringArray()
+	{
+		String []s = new String[list.size()];
+		int i = 0;
+		for(ManufacturersAndProducts m: list)
+		{
+			s[i] = new String(m.getManufacturers() + ", " + m.getProducts());
+			++i;
+		}
+		return s;
+	}
 }
