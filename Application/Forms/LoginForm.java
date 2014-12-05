@@ -145,7 +145,7 @@ public class LoginForm {
 	}
 
 	public static void showInterfaceOfCatalogManager() {
-
+		
 	}
 
 	public static void showInterfaceOfClientManager() {
@@ -157,6 +157,6 @@ public class LoginForm {
 	}
 
 	public static void showInterfaceOfTransportManager() {
-
+		new TransportManagerForm().setVisible(true);
 	}
 }
