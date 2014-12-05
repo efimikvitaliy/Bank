@@ -8,6 +8,10 @@ public class Order
 	private int id;
 	private ArrayList<CatalogRecord> listOfProducts;
 	private int price;
+	private int state;
+	private int deliverTransportCompany;
+	private int returnTransportCompany;
+	private int client_id;
 	public Client m_Client;
 
 	public Order(){}
@@ -16,6 +20,14 @@ public class Order
 		this.price = price;
 		listOfProducts = list;
 		this.client = client;
+	}
+	public Order( int id_, int state_, int deliverTransportCompany_, int returnTransportCompany_, int client_id_ ){
+		id = id_;
+		state = state_;
+		deliverTransportCompany = deliverTransportCompany_;
+		returnTransportCompany = returnTransportCompany_;
+		client_id = client_id_;
+		
 	}
 	public int getId()
 	{
@@ -54,5 +66,9 @@ public class Order
 
 	public void setTransportCompanyToDeliverReturn(TransportCompany company){
 
+	}
+	
+	public String toString(){
+		return Integer.toString(id) + " " + Integer.toString(state) + " " + Integer.toString(deliverTransportCompany) + " " + Integer.toString(returnTransportCompany) + " " + Integer.toString(client_id);
 	}
 }

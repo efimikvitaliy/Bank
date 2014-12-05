@@ -27,6 +27,9 @@ public class ListOfOrders
 	{
 		list.remove(order);
 	}
+	public int size(){
+		return list.size();
+	}
 	public String[] getElementsInStringArray()
 	{
 		String []s = new String[list.size()];
