@@ -13,6 +13,7 @@ public class LoginController
 	private LoginForm m_LoginForm;
 	
 	public LoginController(){}
+	
 	public boolean isManager(int type)
 	{
 		boolean b = false;
@@ -59,6 +60,7 @@ public class LoginController
 	}
 	public static void main(String[] args)
 	{
+		
 		SwingUtilities.invokeLater(new Runnable()
 		{
 			@Override

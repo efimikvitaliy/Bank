@@ -25,11 +25,7 @@ public class CatalogDAO
 	public Catalog getCatalog() throws SQLException
 	{
 		stmt = con.createStatement();
-        r = stmt.executeQuery("SELECT CATALOG_RECORD.price, PRODUCT.count, PRODUCT.name, 
-
-MANUFACTURER.manufacturer FROM CATALOG_RECORD, PRODUCT, MANUFACTURER WHERE CATALOG_RECORD.product_id = PRODUCT.id 
-
-AND PRODUCT.manufacturer_id = MANUFACTURER.id AND PRODUCT.count > 0");
+        r = stmt.executeQuery("SELECT CATALOG_RECORD.price, PRODUCT.count, PRODUCT.name, MANUFACTURER.manufacturer FROM CATALOG_RECORD, PRODUCT, MANUFACTURER WHERE CATALOG_RECORD.product_id = PRODUCT.id AND PRODUCT.manufacturer_id = MANUFACTURER.id AND PRODUCT.count > 0");
         Catalog array = new Catalog();
         while(r.next())
         {
