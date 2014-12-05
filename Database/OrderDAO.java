@@ -50,7 +50,10 @@ public class OrderDAO
 	{
 		ListOfOrders array = new ListOfOrders();
 		stmt = con.createStatement();
-		r = stmt.executeQuery("SELECT CLIENT.id, CLIENT.firstName, CLIENT.secondName, CLIENT.address, CLIENT.email FROM TABLE_ORDER, CLIENT WHERE TABLE_ORDER.client_id = CLIENT.id");
+		/*  б нпдепе с мюя упюмхряъ рнкэйн Id йкхемрю,  ю ме беяэ йкхемр!!!!!
+		 *  рел анкее б нпдепе еярэ лернд getClient, йнрнпши он ясрх бшонкмъер рн фе яюлне
+		 * 
+		 * r = stmt.executeQuery("SELECT CLIENT.id, CLIENT.firstName, CLIENT.secondName, CLIENT.address, CLIENT.email FROM TABLE_ORDER, CLIENT WHERE TABLE_ORDER.client_id = CLIENT.id");
 		while(r.next())
 		{
 			Client client = new Client(r.getString("id"), r.getString("firstName"), r.getString("secondName"));
@@ -59,7 +62,13 @@ public class OrderDAO
 			Order order = new Order(0, null, client);
 			array.add(order);
 		}
-        r.close();
+        r.close();*/
+		r = stmt.executeQuery("SELECT * FROM TABLE_ORDER;");
+		while(r.next()){
+			Order order = new Order(r.getInt("id"), r.getInt("state"), r.getInt("deliverTransportCompany"), r.getInt("returnTransportCompany"), r.getInt("client_id"));
+			array.add(order);
+		}
+		r.close();
         stmt.close();
 		return array;
 	}
