@@ -39,7 +39,7 @@ public class EditOrderController
 	}
 	public ListOfOrders getListOfOrders() throws SQLException
 	{
-		return m_OrderDAO.getListOfOrder();
+		return m_OrderDAO.getListOfOrderWithClient();
 	}
 	public void getOrder(String id)
 	{
