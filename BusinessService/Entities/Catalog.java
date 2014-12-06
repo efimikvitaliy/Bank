@@ -34,7 +34,9 @@ public class Catalog
 		int i = 0;
 		for(CatalogRecord m: records)
 		{
-			s[i] = new String("Manufacturer: " + m.getProduct().getManufacturers() + ", Product: " + m.getProduct().getProducts() + ", Price: " + m.getPrice() + ", Count: " + m.getProduct().getCount());
+			s[i] = new String("Manufacturer: " + m.getProduct().getManufacturers() + ", Product: "
+		                      + m.getProduct().getProducts() + ", Price: " + m.getPrice()
+		                      + ", Count: " + m.getProduct().getCount());
 			++i;
 		}
 		return s;
