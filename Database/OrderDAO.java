@@ -50,8 +50,8 @@ public class OrderDAO
 	{
 		ListOfOrders array = new ListOfOrders();
 		stmt = con.createStatement();
-		/*  ¬ Œ–ƒ≈–≈ ” Õ¿— ’–¿Õ»“—ﬂ “ŒÀ‹ Œ Id  À»≈Õ“¿,  ¿ Õ≈ ¬≈—‹  À»≈Õ“!!!!!
-		 *  “≈Ã ¡ŒÀ≈≈ ¬ Œ–ƒ≈–≈ ≈—“‹ Ã≈“Œƒ getClient,  Œ“Œ–€… œŒ —”“» ¬€œŒÀÕﬂ≈“ “Œ ∆≈ —¿ÃŒ≈
+		/*  √Ç √é√ê√Ñ√Ö√ê√Ö √ì √ç√Ä√ë √ï√ê√Ä√ç√à√í√ë√ü √í√é√ã√ú√ä√é Id √ä√ã√à√Ö√ç√í√Ä,  √Ä √ç√Ö √Ç√Ö√ë√ú √ä√ã√à√Ö√ç√í!!!!!
+		 *  √í√Ö√å √Å√é√ã√Ö√Ö √Ç √é√ê√Ñ√Ö√ê√Ö √Ö√ë√í√ú √å√Ö√í√é√Ñ getClient, √ä√é√í√é√ê√õ√â √è√é √ë√ì√í√à √Ç√õ√è√é√ã√ç√ü√Ö√í √í√é √Ü√Ö √ë√Ä√å√é√Ö
 		 * 
 		 * r = stmt.executeQuery("SELECT CLIENT.id, CLIENT.firstName, CLIENT.secondName, CLIENT.address, CLIENT.email FROM TABLE_ORDER, CLIENT WHERE TABLE_ORDER.client_id = CLIENT.id");
 		while(r.next())
@@ -71,6 +71,23 @@ public class OrderDAO
 		r.close();
         stmt.close();
 		return array;
+	}
+	public ListOfOrders getListOfOrderWithClient() throws SQLException
+	{
+		ListOfOrders array = new ListOfOrders();
+		stmt = con.createStatement();
+		r = stmt.executeQuery("SELECT id, client_id FROM TABLE_ORDER WHERE TABLE_ORDER.state = 1");
+		while(r.next())
+		{
+			Client client = new Client();
+			client.setId(r.getString("client_id"));
+			Order order = new Order(0, null, client);
+			order.setId(Integer.valueOf(r.getString("id")));
+			array.add(order);
+		}
+        r.close();
+        stmt.close();
+	return array;
 	}
 	public ListOfOrders getListOfReturns()
 	{
