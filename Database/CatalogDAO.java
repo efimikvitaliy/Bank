@@ -25,30 +25,27 @@ public class CatalogDAO
 	public Catalog getCatalog() throws SQLException
 	{
 		stmt = con.createStatement();
-        r = stmt.executeQuery("SELECT CATALOG_RECORD.price, PRODUCT.count, PRODUCT.name, MANUFACTURER.manufacturer FROM CATALOG_RECORD, PRODUCT, MANUFACTURER WHERE CATALOG_RECORD.product_id = PRODUCT.id AND PRODUCT.manufacturer_id = MANUFACTURER.id AND PRODUCT.count > 0");
+        r = stmt.executeQuery("SELECT CATALOG_RECORD.id, CATALOG_RECORD.price, PRODUCT.count, PRODUCT.name, MANUFACTURER.manufacturer FROM CATALOG_RECORD, PRODUCT, MANUFACTURER WHERE CATALOG_RECORD.product_id = PRODUCT.id AND PRODUCT.manufacturer_id = MANUFACTURER.id AND PRODUCT.count > 0");
         Catalog array = new Catalog();
         while(r.next())
         {
-        	ManufacturersAndProducts mp = new ManufacturersAndProducts(0, r.getString("manufacturer"), 
-
-r.getString("name"));
+        	ManufacturersAndProducts mp = new ManufacturersAndProducts(0, r.getString("manufacturer"), r.getString("name"));
         	mp.setCount(Integer.valueOf(r.getString("count")));
         	CatalogRecord cr = new CatalogRecord(Integer.valueOf(r.getString("price")), "", mp);
+        	cr.setId(r.getString("id"));
         	array.addRecord(cr);
         }
         r.close();
         stmt.close();
 		return array;
 	}
-	public String getIdAndCountCatalogRecord(String product, String manufacturer) throws SQLException
+	public String getIdFromCatalogRecord(String product, String manufacturer) throws SQLException//++++
 	{
 		stmt = con.createStatement();
-		int id = 0, count = 0;
+		int id = 0;
 		r = stmt.executeQuery("SELECT CATALOG_RECORD.id FROM CATALOG_RECORD, PRODUCT, MANUFACTURER " +
-        		              "WHERE CATALOG_RECORD.product_id = PRODUCT.id AND PRODUCT.name = '" + 
-
-product + "' AND " +
-        		              "MANUFACTURER.manufacturer = '" + manufacturer + "'");
+	              "WHERE CATALOG_RECORD.product_id = PRODUCT.id AND PRODUCT.manufacturer_id = MANUFACTURER.id " +
+	              " AND PRODUCT.name = '" + product + "' AND MANUFACTURER.manufacturer = '" + manufacturer + "'");
 		if(r.next())
         {
         	id = Integer.valueOf(r.getString("id"));
@@ -56,6 +53,24 @@ product + "' AND " +
         r.close();
         stmt.close();
 		return new String("" + id);
+	}
+	public ArrayList<String> getProductCountOrder(String id) throws SQLException
+	{
+		ArrayList<String> array = new ArrayList<>();
+		stmt = con.createStatement();
+        int count = 0;
+		r = stmt.executeQuery("SELECT ORDER_LINE.count, PRODUCT.name, MANUFACTURER.manufacturer FROM ORDER_LINE," +
+	              " PRODUCT, MANUFACTURER, CATALOG_RECORD, TABLE_ORDER WHERE TABLE_ORDER.client_id = " + id +
+	              " AND TABLE_ORDER.id = ORDER_LINE.order_id AND ORDER_LINE.catalog_record_id = CATALOG_RECORD.id" + 
+	              " AND CATALOG_RECORD.product_id = PRODUCT.id AND PRODUCT.manufacturer_id = MANUFACTURER.id");
+		while(r.next())
+        {
+        	count = Integer.valueOf(r.getString("count"));
+        	array.add("" + r.getString("manufacturer") + " " + r.getString("name") + " " + count);
+        }
+        r.close();
+        stmt.close();
+		return array;
 	}
 	public CatalogRecord getCatalogRecord(String id)
 	{
