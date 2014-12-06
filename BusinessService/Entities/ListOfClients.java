@@ -25,7 +25,7 @@ public class ListOfClients
 		int i = 0;
 		for(Client m: list)
 		{
-			s[i] = new String(m.getFirstName() + ", " + m.getSecondName());
+			s[i] = new String("id = " + m.getId() + ", Full Name = " + m.getFirstName() + " " + m.getSecondName());
 			++i;
 		}
 		return s;
