@@ -36,10 +36,8 @@ public class ListOfOrders
 		int i = 0;
 		for(Order m: list)
 		{
-			s[i] = new String(m.getClient().getFirstName() + " " 
-		                     + m.getClient().getSecondName() + ", "
-					         + m.getClient().getAddress() + ", "
-					         + m.getClient().getEmail());
+			s[i] = new String("Order id = " + m.getId() + ", client id = "
+		                     + m.getClient().getId());
 			++i;
 		}
 		return s;
