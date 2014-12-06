@@ -33,10 +33,6 @@ public class EditListOfManufacturersAndProductsController
 			m_ManufacturersAndProductsDAO.update(m);
 		}
 	}
-	public void create(String m, String p)
-	{
-
-	}
 	public void deleteListOfManufacturersAndProducts() throws SQLException
 	{
 		m_ManufacturersAndProductsDAO.deleteListOfManufacturersAndProducts();
@@ -48,17 +44,5 @@ public class EditListOfManufacturersAndProductsController
 	public ListOfManufacturersAndProducts getListOfManufacturersAndProducts() throws SQLException
 	{
 		return m_ManufacturersAndProductsDAO.getListOfManufacturersAndProducts();
-	}
-	public void saveListOfManufacturersAndProducts(ListOfManufacturersAndProducts list)
-	{
-
-	}
-	public void showEditListOfManufacturersAndProductsForm()
-	{
-		
-	}
-	public void showListOfManufacturersAndProductsForm()
-	{
-	
 	}
 }
