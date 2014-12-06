@@ -53,9 +53,7 @@ public class CreateOrderController
 		for(int i = 0; i < list.size(); ++i)
 		{
 			CatalogRecord cr = list.get(i);
-			String str = m_CatalogDAO.getIdAndCountCatalogRecord(cr.getProduct().getProducts(), 
-
-cr.getProduct().getManufacturers());
+			String str = m_CatalogDAO.getIdFromCatalogRecord(cr.getProduct().getProducts(), cr.getProduct().getManufacturers());
 			cr.setId(str);
 		}
 		m_OrderDAO.saveOrder(order);
@@ -66,7 +64,7 @@ cr.getProduct().getManufacturers());
 	}
 	public void showListOfClientsForm()
 	{
-		m_OrderForm = new OrderForm();
+		m_OrderForm = new OrderForm(this);
 		m_OrderForm.showClients();
 	}
 	public int getIndexProducts(String str, String s[])
@@ -80,6 +78,10 @@ cr.getProduct().getManufacturers());
 		}
 		return -1;
 	}
+	public boolean isClientHasOrder(int id) throws SQLException
+	{
+		return m_OrderDAO.isClientHasOrder(id);
+	}
 	public String createOrderList(ArrayList<String> array, int counts[]) throws NumberFormatException
 	{
 		int totalPrice = 0;
@@ -87,12 +89,8 @@ cr.getProduct().getManufacturers());
 		for(int i = 0; i < array.size(); ++i)
 		{
 			int count = counts[i];
-			int price = Integer.valueOf(array.get(i).substring(array.get(i).lastIndexOf("ce: ") + 3, 
-
-array.get(i).lastIndexOf(",")).trim());
-			sb.append((i + 1) + ". " + array.get(i).substring(0, array.get(i).lastIndexOf(",")) + "x" 
-
-+ count + " = " + (price*count) + "\n");
+			int price = Integer.valueOf(array.get(i).substring(array.get(i).lastIndexOf("ce: ") + 3, array.get(i).lastIndexOf(",")).trim());
+			sb.append((i + 1) + ". " + array.get(i).substring(0, array.get(i).lastIndexOf(",")) + "x" + count + " = " + (price*count) + "\n");
 			array.set(i, array.get(i).substring(0, array.get(i).lastIndexOf(" ")) + " " + count);
 			totalPrice += count*price;
 		}
@@ -100,7 +98,7 @@ array.get(i).lastIndexOf(",")).trim());
 		return sb.toString();
 	}
 	public Order createOrder(int totalPrice, ArrayList<String> array, Client client)
-	{//1. Manufacturer: LG, Product: monitor, Price: 1000, Count: 20
+	{
 		ArrayList<CatalogRecord> arrayCatalogRecord = new ArrayList<>();
 		for(String str: array)
 		{
