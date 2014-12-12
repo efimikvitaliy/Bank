@@ -37,6 +37,36 @@ public class Order
 	{
 		this.id = id;
 	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+	public int getDeliverTransportCompany() {
+		return deliverTransportCompany;
+	}
+	public void setDeliverTransportCompany(int deliverTransportCompany) {
+		this.deliverTransportCompany = deliverTransportCompany;
+	}
+	public int getReturnTransportCompany() {
+		return returnTransportCompany;
+	}
+	public void setReturnTransportCompany(int returnTransportCompany) {
+		this.returnTransportCompany = returnTransportCompany;
+	}
+	public int getClient_id() {
+		return client_id;
+	}
+	public void setClient_id(int client_id) {
+		this.client_id = client_id;
+	}
+	public Client getM_Client() {
+		return m_Client;
+	}
+	public void setM_Client(Client m_Client) {
+		this.m_Client = m_Client;
+	}
 	public Client getClient()
 	{
 		return client;
@@ -61,7 +91,7 @@ public class Order
 	}
 	
 	public void setTransportCompanyToDeliver(TransportCompany company){
-
+		
 	}
 
 	public void setTransportCompanyToDeliverReturn(TransportCompany company){

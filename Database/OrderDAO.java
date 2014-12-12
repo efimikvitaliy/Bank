@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import BusinessService.Entities.Catalog;
 import BusinessService.Entities.CatalogRecord;
@@ -80,9 +81,16 @@ public class OrderDAO
 	{
 		return null;
 	}
-	public Order getOrder(String name)
+	public Order getOrder(String id) throws SQLException
 	{
-		return null;
+		stmt = con.createStatement();
+		r = stmt.executeQuery("SELECT * FROM TABLE_ORDER WHERE id = " + id + ";");
+		Order order = null;
+		if(r.next()){
+			order = new Order(r.getInt("id"), r.getInt("state"), r.getInt("deliverTransportCompany"), r.getInt("returnTransportCompany"), r.getInt("client_id"));
+		}
+		stmt.close();
+		return order;
 	}
 	public Order getReturn(String name)
 	{
@@ -178,9 +186,11 @@ public class OrderDAO
         r.close();
         stmt.close();
 	}
-	public void saveOrderWithTransportCompany(Order order)
+	public void saveOrderWithTransportCompany(Order order) throws SQLException
 	{
-
+		stmt = con.createStatement();
+		stmt.executeUpdate("UPDATE TABLE_ORDER SET deliverTransportCompany = " + order.getDeliverTransportCompany() + " WHERE id = " + order.getId());
+		stmt.close();
 	}
 	public void saveOrderWithTransportCompanyToReturn(Order order)
 	{

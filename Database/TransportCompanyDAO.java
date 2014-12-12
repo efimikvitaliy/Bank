@@ -1,7 +1,11 @@
 package Database;
 
-import BusinessService.Entities.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+import BusinessService.Entities.*;
 
 /**
  * @author user
@@ -10,19 +14,23 @@ import BusinessService.Entities.*;
  */
 public class TransportCompanyDAO {
 
-	public TransportCompanyDAO(){
+	private Connection con = null;
+	private Statement stmt = null;
+	private ResultSet r = null;
 
+	public TransportCompanyDAO() {
+		con = DBManager.getInstance().getConnection();
 	}
 
 	public void finalize() throws Throwable {
 
 	}
 
-	public boolean createListOfTransportCompaniesInDatabase(){
+	public boolean createListOfTransportCompaniesInDatabase() {
 		return false;
 	}
 
-	public boolean deleteListOfTransportCompaniesInDatabase(){
+	public boolean deleteListOfTransportCompaniesInDatabase() {
 		return false;
 	}
 
@@ -30,19 +38,31 @@ public class TransportCompanyDAO {
 	 * 
 	 * @param company
 	 */
-	public boolean deleteSelectedTransportCompanyFrowDatabase(TransportCompany company){
+	public boolean deleteSelectedTransportCompanyFrowDatabase(
+			TransportCompany company) {
 		return false;
 	}
 
-	public ListOfTransportCompanies getListOfTransportCompanies(){
-		return null;
+	public ListOfTransportCompanies getListOfTransportCompanies() throws SQLException {
+		ListOfTransportCompanies array = new ListOfTransportCompanies();
+		stmt = con.createStatement();
+		
+		r = stmt.executeQuery("SELECT * FROM \"TRANSPORT_COMPANY\";");
+		while(r.next()){
+			TransportCompany tranComp = new TransportCompany(r.getInt("id"),r.getString("name"),r.getString("description"));
+			array.add(tranComp);
+		}
+		r.close();
+        stmt.close();
+		return array;
+		
 	}
 
 	/**
 	 * 
 	 * @param name
 	 */
-	public TransportCompany getTransportCompany(String name){
+	public TransportCompany getTransportCompany(String name) {
 		return null;
 	}
 
@@ -50,7 +70,8 @@ public class TransportCompanyDAO {
 	 * 
 	 * @param company
 	 */
-	public boolean saveChangesOfTransportCompanyInDatabase(TransportCompany company){
+	public boolean saveChangesOfTransportCompanyInDatabase(
+			TransportCompany company) {
 		return false;
 	}
 
@@ -58,7 +79,7 @@ public class TransportCompanyDAO {
 	 * 
 	 * @param company
 	 */
-	public boolean saveNewTransportCompanyInDatabase(TransportCompany company){
+	public boolean saveNewTransportCompanyInDatabase(TransportCompany company) {
 		return false;
 	}
 

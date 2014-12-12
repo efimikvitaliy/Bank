@@ -19,7 +19,7 @@ public class AssignOrderTheTransportCompanyController {
 	public TransportCompanyDAO m_TransportCompanyDAO;
 	public Order m_Order;
 	public ListOfOrders m_ListOfOrders;
-	public OrderForm m_OrderForm;
+	public OrderFormJustForm m_OrderForm;
 	public ListOfTransportCompanies m_ListOfTransportCompanies;
 	public ListOfOrderForm m_ListOfOrderForm;
 	public JFrame mainFrame;
@@ -35,16 +35,24 @@ public class AssignOrderTheTransportCompanyController {
 	/**
 	 * 
 	 * @param name
+	 * @throws SQLException 
 	 */
-	public void selectOrder(String name){
-
+	public void selectOrder(String id) throws SQLException{
+		m_Order = m_OrderDAO.getOrder(id);
+		m_OrderForm.displayDataAboutOrder(m_Order);
+		m_ListOfTransportCompanies = m_TransportCompanyDAO.getListOfTransportCompanies();
+		m_ListOfTransportCompanyForm.displayListOfTransportCompanies(m_ListOfTransportCompanies);
+		
 	}
 
 	/**
 	 * 
 	 * @param company
+	 * @throws SQLException 
 	 */
-	public void transportCompanySelected(TransportCompany company){
+	public void transportCompanySelected(TransportCompany company) throws SQLException{
+		m_Order.setDeliverTransportCompany(company.getTransportCompanyId());
+		m_OrderDAO.saveOrderWithTransportCompany(m_Order);
 
 	}
 	
@@ -53,8 +61,12 @@ public class AssignOrderTheTransportCompanyController {
 	}
 	public void startRoutine() throws SQLException{
 		m_OrderDAO = new OrderDAO();
+		m_TransportCompanyDAO = new TransportCompanyDAO();
 		m_ListOfOrders = m_OrderDAO.getListOfOrder();
+		m_ListOfOrderForm.setM_AssignOrderTheTransportCompanyController(this);
 		m_ListOfOrderForm.displayListOfOrders(m_ListOfOrders);
+		m_ListOfTransportCompanyForm.m_AssignOrderTheTransportCompanyController = this;
+		
 		
 	}
 

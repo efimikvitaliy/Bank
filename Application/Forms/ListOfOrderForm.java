@@ -1,8 +1,17 @@
 package Application.Forms;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.SQLException;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import BusinessService.Entities.*;
 import Application.Controllers.*;
@@ -24,18 +33,110 @@ public class ListOfOrderForm extends JPanel {
 	public EditOrderController m_EditOrderController;
 	public AssignOrderTheTransportCompanyController m_AssignOrderTheTransportCompanyController;
 	public AssignReturnTheTransportCompanyController m_AssignReturnTheTransportCompanyController;
+	public EditOrderController getM_EditOrderController() {
+		return m_EditOrderController;
+	}
+
+	public void setM_EditOrderController(EditOrderController m_EditOrderController) {
+		this.m_EditOrderController = m_EditOrderController;
+	}
+
+	public AssignOrderTheTransportCompanyController getM_AssignOrderTheTransportCompanyController() {
+		return m_AssignOrderTheTransportCompanyController;
+	}
+
+	public void setM_AssignOrderTheTransportCompanyController(
+			AssignOrderTheTransportCompanyController m_AssignOrderTheTransportCompanyController) {
+		this.m_AssignOrderTheTransportCompanyController = m_AssignOrderTheTransportCompanyController;
+	}
+
+	public AssignReturnTheTransportCompanyController getM_AssignReturnTheTransportCompanyController() {
+		return m_AssignReturnTheTransportCompanyController;
+	}
+
+	public void setM_AssignReturnTheTransportCompanyController(
+			AssignReturnTheTransportCompanyController m_AssignReturnTheTransportCompanyController) {
+		this.m_AssignReturnTheTransportCompanyController = m_AssignReturnTheTransportCompanyController;
+	}
+
+	public OrderReturnController getM_OrderReturnController() {
+		return m_OrderReturnController;
+	}
+
+	public void setM_OrderReturnController(
+			OrderReturnController m_OrderReturnController) {
+		this.m_OrderReturnController = m_OrderReturnController;
+	}
+
 	public OrderReturnController m_OrderReturnController;
 	JTable table;
+	JTextField id;
 	public ListOfOrderForm(){
 		super();
-		table = new JTable(0,5);
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("id");
+		model.addColumn("state");
+		model.addColumn("client id");
+		table = new JTable(model);
+		table.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				Point point = arg0.getPoint();
+                int column = table.columnAtPoint(point);
+                int row = table.rowAtPoint(point);
+                id.setText(table.getModel().getValueAt(row, 0).toString());
+                
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}});
+		
 		JLabel label = new JLabel("Id: ");
-		JTextField id = new JTextField("",20);
+		id = new JTextField("",20);
 		JButton ok = new JButton("OK");
+		ok.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				try {
+					m_AssignOrderTheTransportCompanyController.selectOrder(id.getText());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}});
 		JScrollPane scp = new JScrollPane(table);
 		JScrollBar verticalScrollBar = new 	JScrollBar();
 		scp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 		scp.setVerticalScrollBar(verticalScrollBar);
+		table.setSize(new Dimension(400, 190));
+		table.setPreferredSize(new Dimension(400, 190));
+		scp.setSize(new Dimension(400, 190));
+		scp.setPreferredSize(new Dimension(400, 190));
 		GridBagLayout layout = new GridBagLayout();
 		this.setLayout(layout);
 		GridBagConstraints c = new GridBagConstraints();
@@ -71,8 +172,11 @@ public class ListOfOrderForm extends JPanel {
 	 * @param list
 	 */
 	public void displayListOfOrders(ListOfOrders list){
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		Order order;
 		for(int i=0;i<list.size();++i){
-			
+			order = list.get(i);
+			model.addRow(new Object[]{order.getId(),order.getState(),order.getClient_id()});
 		}
 	}
 

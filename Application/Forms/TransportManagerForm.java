@@ -68,7 +68,7 @@ public class TransportManagerForm extends JFrame {
 					JFrame frame = new JFrame("Assign Order The Transport Company");
 					ListOfOrderForm listOfOrderForm = new ListOfOrderForm();
 					
-					frame.setSize(500, 500);
+					frame.setSize(500, 1000);
 					GridBagLayout layout = new GridBagLayout();
 					frame.setLayout(layout);
 					GridBagConstraints c = new GridBagConstraints();
@@ -77,8 +77,25 @@ public class TransportManagerForm extends JFrame {
 					c.gridy = 1;
 					layout.setConstraints(listOfOrderForm, c);
 					frame.add(listOfOrderForm);
+					
+					OrderFormJustForm orderForm = new OrderFormJustForm();
+					
+					c.gridx = 1;
+					c.gridy = 2;
+					layout.setConstraints(orderForm, c);
+					frame.add(orderForm);
+					
+					ListOfTransportCompanyForm transForm = new ListOfTransportCompanyForm();
+					
+					c.gridx = 1;
+					c.gridy = 3;
+					layout.setConstraints(transForm, c);
+					frame.add(transForm);
+					
 					controller.setMainFrame(frame);
 					controller.m_ListOfOrderForm = listOfOrderForm;
+					controller.m_OrderForm = orderForm;
+					controller.m_ListOfTransportCompanyForm = transForm;
 					frame.setVisible(true);
 					controller.startRoutine();
 				} catch (SQLException e) {
