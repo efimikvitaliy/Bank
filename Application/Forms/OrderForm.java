@@ -40,62 +40,29 @@ public class OrderForm
 	private EditOrderController m_EditOrderController;
 	private Client client;
 	//public OrderReturnController m_OrderReturnController;
-	private JDialog jdl1;
-	private JDialog jdl2;
 	private JDialog jdl3;
-	private JDialog jdl4;
 	private JFrame jf;
 	private JLabel jl1;
 	private JLabel jl2;
 	private JLabel jl3;
 	private JLabel jl4;
 	private JLabel jl5;
-	private JButton jb1;
-	private JButton jb2;
-	private JButton jb3;
-	private JButton jb4;
 	private JButton jb5;
 	private JButton jb6;
-	private JButton jb7;
-	private JButton jb8;
-	private JList<String> jlist;
-	private JList<String> jlist1;
 	private JTextArea jta1;
-	private JScrollPane jsp1;
 	private JScrollPane jsp2;
-	private JScrollPane jsp3;
-	private JCheckBox jcb[];
-	private JTextField jtf[];
-	private int index = -1;
-	private int orderIndex = -1;
-	private Object obj;
 	private int totalPrice = 0;
-	private int editOrCreate = -1;
-	//private int size = 0;
 	private ArrayList<String> array;
 	private ArrayList<String> arrayCountsProducts;
 	private String s[];
-	private int counts[];
 	
-	public OrderForm(Object tmp)//++++
+	public OrderForm()
 	{
 		jf = new JFrame();
-		if(tmp instanceof CreateOrderController)
-		{
-			m_CreateOrderController = (CreateOrderController) tmp;
-			m_EditOrderController = new EditOrderController();
-			editOrCreate = 1;
-		}
-		else if(tmp instanceof EditOrderController)
-		{
-			m_EditOrderController = (EditOrderController) tmp;
-			m_CreateOrderController = new CreateOrderController();
-			editOrCreate = 2;
-		}
 		jdl3 = new JDialog(jf, "Order", true);
 		jdl3.setLocation(400, 100);
 		GridBagLayout gbl = new GridBagLayout();
-		GridBagConstraints gbc = new GridBagConstraints();	
+		GridBagConstraints gbc = new GridBagConstraints();
 		jdl3.setSize(500, 500);
 		jdl3.setResizable(false);
 		jdl3.setLayout(gbl);
@@ -165,118 +132,21 @@ public class OrderForm
 		gbl.setConstraints(jb6, gbc);
 		jdl3.add(jb6);
 		
-		jdl1 = new JDialog(jf, "Choice client", true);
-		jdl1.setLayout(gbl);
-		jdl1.setSize(300, 300);
-		jdl1.setLocation(400, 100);
+
 		
-		jlist = new JList<>();
-		jlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jsp1 = new JScrollPane(jlist);
-		jsp1.setPreferredSize(new Dimension(250, 190));
-		gbc.insets = new Insets(0,0,0,0);
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.weightx = 0.0;
-		gbc.weighty = 1.0;
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbl.setConstraints(jsp1, gbc);
-		jdl1.add(jsp1);
-		
-		jb1 = new JButton("OK");
-		gbc.gridwidth = 1;
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbl.setConstraints(jb1, gbc);
-		jdl1.add(jb1);
-		
-		jb2 = new JButton("Cancel");
-    	gbc.gridx = 2;
-		gbc.gridy = 2;
-		gbl.setConstraints(jb2, gbc);
-		jdl1.add(jb2);
-		
-		jdl4 = new JDialog(jf, "Choice order", true);
-		jdl4.setLayout(gbl);
-		jdl4.setSize(300, 300);
-		jdl4.setLocation(400, 100);
-		
-		jlist1 = new JList<>();
-		jlist1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		jsp3 = new JScrollPane(jlist1);
-		jsp3.setPreferredSize(new Dimension(250, 190));
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.weightx = 0.0;
-		gbc.weighty = 1.0;
-		gbc.gridx = 1;
-		gbc.gridy = 1;
-		gbl.setConstraints(jsp3, gbc);
-		jdl4.add(jsp3);
-		
-		jb7 = new JButton("OK");
-		gbc.gridwidth = 1;
-		gbc.gridx = 1;
-		gbc.gridy = 2;
-		gbl.setConstraints(jb7, gbc);
-		jdl4.add(jb7);
-		
-		jb8 = new JButton("Cancel");
-    	gbc.gridx = 2;
-		gbc.gridy = 2;
-		gbl.setConstraints(jb8, gbc);
-		jdl4.add(jb8);
-		
-		jb1.addActionListener(new ActionListener()//++++
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				if(index != -1)
-				{
-					try
-					{
-						String str = ((ListOfClients) obj).get(index).getId();
-						client = m_CreateOrderController.getClient(str);
-						if(m_CreateOrderController.isClientHasOrder(Integer.valueOf(client.getId())))
-						{
-							JOptionPane.showMessageDialog(jf, "This client has order");	
-							return;
-						}
-						jl1.setText(jl1.getText() + client.getFirstName());
-						jl2.setText(jl2.getText() + client.getSecondName());
-						jl3.setText(jl3.getText() + client.getEmail());
-						jl4.setText(jl4.getText() + client.getAddress());
-						jdl1.setVisible(false);
-						m_CreateOrderController.showCatalogForm();
-					}
-					catch(SQLException e1)
-					{
-						JOptionPane.showMessageDialog(jf, "The database is not available");
-					}
-				}
-			}
-		});
-		jb2.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				jdl1.setVisible(false);
-			}
-		});
-		jb5.addActionListener(new ActionListener()//+++
+		jb5.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				try
 				{
-					if(editOrCreate == 1)
+					if(m_CreateOrderController.getType() == 1)
 					{
 						Order order = m_CreateOrderController.createOrder(totalPrice, array, client);
 						m_CreateOrderController.saveOrder(order);
 					}
-					else if(editOrCreate == 2)
+					else if(m_CreateOrderController.getType() == 2)
 					{
 						m_EditOrderController.deleteProducts(client.getId(), arrayCountsProducts);
 						Order order = m_CreateOrderController.createOrder(totalPrice, array, client);
@@ -298,22 +168,14 @@ public class OrderForm
 				jdl3.setVisible(false);
 			}
 		});
-		jlist.addListSelectionListener(new ListSelectionListener()
-		{
-			@Override
-			public void valueChanged(ListSelectionEvent e)
-			{
-				index = jlist.getSelectedIndex();
-			}
-		});
-		jlist1.addListSelectionListener(new ListSelectionListener()
-		{
-			@Override
-			public void valueChanged(ListSelectionEvent e)
-			{
-				orderIndex = jlist1.getSelectedIndex();
-			}
-		});
+	}
+	public void init(String st)
+	{
+		jl1.setText(jl1.getText() + client.getFirstName());
+		jl2.setText(jl2.getText() + client.getSecondName());
+		jl3.setText(jl3.getText() + client.getEmail());
+		jl4.setText(jl4.getText() + client.getAddress());
+		jta1.append(st);
 	}
 	public void confirmMakeOrder()
 	{
@@ -323,303 +185,44 @@ public class OrderForm
 	{
 
 	}
-	public void showProducts()//+++++
+	public ArrayList<String> getArrayCountsProducts()
 	{
-		jdl2 = new JDialog(jf, "Choice products", true);
-		jdl2.setLocation(400, 100);
-		GridBagLayout gbl = new GridBagLayout();
-		GridBagConstraints gbc = new GridBagConstraints();
-		jdl2.setLayout(gbl);
-		jdl2.setSize(700, 400);
-		array = new ArrayList<>();
-		try
-		{
-			Catalog list = m_CreateOrderController.getCatalog();
-			s = list.getElementsInStringArray();
-			jcb = new JCheckBox[list.size()];
-			jtf = new JTextField[list.size()];
-			gbc.weightx = 0.0;
-			gbc.weighty = 1.0;
-			arrayCountsProducts = m_EditOrderController.getProductCountOrder(client.getId());
-			for(int i = 1; i <= list.size(); ++i)
-			{
-				if(arrayCountsProducts.size() != 0)
-				{
-					int k = m_EditOrderController.getIndexByProducts(arrayCountsProducts, s[i - 1]);
-					if(k != -1)
-					{
-						String ss = arrayCountsProducts.get(k).substring(arrayCountsProducts.get(k).lastIndexOf(" ")).trim();
-						int c = Integer.valueOf(ss) + Integer.valueOf(s[i - 1].substring(s[i - 1].lastIndexOf(" ")).trim());
-						jcb[i - 1] = new JCheckBox(s[i - 1].substring(0, s[i - 1].lastIndexOf(" ")) + " " + c);
-						array.add(jcb[i - 1].getText());
-						jtf[i - 1] = new JTextField("" + ss, 15);
-						s[i - 1] = jcb[i - 1].getText();
-						jcb[i - 1].setSelected(true);
-						jtf[i - 1].setEnabled(true);
-						arrayCountsProducts.set(k, arrayCountsProducts.get(k).substring(0, arrayCountsProducts.get(k).lastIndexOf(" ")) + " " + c);
-					}
-					else
-					{
-						jcb[i - 1] = new JCheckBox(s[i - 1]);
-						jtf[i - 1] = new JTextField(15);
-						jtf[i - 1].setEnabled(false);
-					}
-				}
-				else
-				{
-					jcb[i - 1] = new JCheckBox(s[i - 1]);
-					jtf[i - 1] = new JTextField(15);
-					jtf[i - 1].setEnabled(false);
-				}
-				gbc.gridx = 1;
-				gbc.gridy = i;
-				gbl.setConstraints(jcb[i - 1], gbc);
-				jcb[i - 1].addItemListener(new ItemListener()
-				{
-					@Override
-					public void itemStateChanged(ItemEvent e)
-					{
-						JCheckBox cb = (JCheckBox) e.getItem();
-						if(cb.isSelected())
-						{
-							array.add(cb.getText());
-							int t = m_CreateOrderController.getIndexProducts(cb.getText(), s);
-							jtf[t].setEnabled(true);
-						}
-						else
-						{
-							array.remove(cb.getText());
-							int t = m_CreateOrderController.getIndexProducts(cb.getText(), s);
-							jtf[t].setEnabled(false);
-						}
-					}
-				});
-				jdl2.add(jcb[i - 1]);
-				
-				gbc.gridx = 2;
-				gbc.gridy = i;
-				gbl.setConstraints(jtf[i - 1], gbc);
-				jdl2.add(jtf[i - 1]);
-			}
-			jb3 = new JButton("OK");
-			gbc.gridwidth = 1;
-			gbc.gridx = 1;
-			gbc.gridy = list.size() + 1;
-			gbl.setConstraints(jb3, gbc);
-			jdl2.add(jb3);
-			
-			jb4 = new JButton("Cancel");
-	    	gbc.gridx = 2;
-			gbc.gridy = list.size() + 1;
-			gbl.setConstraints(jb4, gbc);
-			jdl2.add(jb4);
-			
-			jb3.addActionListener(new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					if(array.size() != 0)
-					{
-						try
-						{
-							int q = isCurrentCount();
-							if(q == -1)
-							{
-								createOrderList();
-								jdl2.setVisible(false);
-								jdl3.setVisible(true);
-							}
-							else
-							{
-								JOptionPane.showMessageDialog(jdl2, jcb[q].getText() + " decrease the value");
-							}
-						}
-						catch(NumberFormatException e1)
-						{
-							JOptionPane.showMessageDialog(jdl2, "Not number type in field");
-						}
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(jdl2, "Entered products");
-					}
-				}
-			});
-			jb4.addActionListener(new ActionListener()
-			{
-				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					jdl2.setVisible(false);
-				}
-			});
-			jdl2.setVisible(true);
-		}
-		catch(SQLException e)
-		{
-			JOptionPane.showMessageDialog(jf, "The database is not available");
-			return;
-		}
+		return arrayCountsProducts;
 	}
-	public void showClients()
+	public void setArrayCountsProducts(ArrayList<String> arrayCountsProducts)
 	{
-		try
-		{
-			ListOfClients list = m_CreateOrderController.getListOfClients();
-			s = list.getElementsInStringArray();
-			DefaultListModel<String> model = new DefaultListModel<>();
-			for(String str: s)
-			{
-				model.addElement(str);
-			}
-			jlist.setModel(model);
-			obj = list;
-		}
-		catch(SQLException e1)
-		{
-			JOptionPane.showMessageDialog(jf, "The database is not available");
-			return;
-		}
-		jdl1.setVisible(true);
+		this.arrayCountsProducts = arrayCountsProducts;
 	}
-	public void showListOfOrderEdit()
+	public CreateOrderController getM_CreateOrderController()
 	{
-		try
-		{
-			ListOfOrders list = m_EditOrderController.getListOfOrders();
-			s = list.getElementsInStringArray();
-			DefaultListModel<String> model = new DefaultListModel<>();
-			for(String str: s)
-			{
-				model.addElement(str);
-			}
-			jlist1.setModel(model);
-			obj = list;
-		}
-		catch(SQLException e1)
-		{
-			JOptionPane.showMessageDialog(jf, "The database is not available");
-			return;
-		}
-		jb7.addActionListener(new ActionListener()///+++++
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				if(orderIndex != -1)
-				{
-					try
-					{
-						index = orderIndex;
-						String str = String.valueOf(((ListOfOrders) obj).get(index).getId());
-						client = m_EditOrderController.getClient(str);
-						jl1.setText(jl1.getText() + client.getFirstName());
-						jl2.setText(jl2.getText() + client.getSecondName());
-						jl3.setText(jl3.getText() + client.getEmail());
-						jl4.setText(jl4.getText() + client.getAddress());
-						m_EditOrderController.showCatalogForm();
-						jdl4.setVisible(false);
-					}
-					catch(SQLException e1)
-					{
-						JOptionPane.showMessageDialog(jf, "The database is not available");
-					}
-				}
-			}
-		});
-		jb8.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				jdl4.setVisible(false);
-			}
-		});
-		jdl4.setVisible(true);
+		return m_CreateOrderController;
 	}
-	public void showListOfOrderDelete()
+	public void setM_CreateOrderController(CreateOrderController m_CreateOrderController)
 	{
-		try
-		{
-			ListOfOrders list = m_EditOrderController.getListOfOrders();
-			s = list.getElementsInStringArray();
-			DefaultListModel<String> model = new DefaultListModel<>();
-			for(String str: s)
-			{
-				model.addElement(str);
-			}
-			jlist1.setModel(model);
-			obj = list;
-		}
-		catch(SQLException e1)
-		{
-			JOptionPane.showMessageDialog(jf, "The database is not available");
-			return;
-		}
-		jb7.addActionListener(new ActionListener()//++++
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				if(orderIndex != -1)
-				{
-					try
-					{
-						int res = JOptionPane.showConfirmDialog(jf, "Do you want delete this order?", "Exit", JOptionPane.YES_NO_OPTION);
-						switch(res)
-						{
-						case JOptionPane.YES_OPTION:
-							m_EditOrderController.deleteOrder(s[orderIndex].substring(s[orderIndex].indexOf("=") + 1, s[orderIndex].indexOf(",")).trim());
-							break;
-						case JOptionPane.NO_OPTION:
-							break;
-						}
-						jdl4.setVisible(false);
-					}
-					catch(SQLException e1)
-					{
-						JOptionPane.showMessageDialog(jf, "The database is not available");
-						return;
-					}
-				}
-			}
-		});
-		jb8.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				jdl4.setVisible(false);
-			}
-		});
-		jdl4.setVisible(true);
+		this.m_CreateOrderController = m_CreateOrderController;
 	}
-	public void createOrderList() throws NumberFormatException
+	public EditOrderController getM_EditOrderController()
 	{
-		int counts[] = new int[array.size()];
-		for(int i = 0; i < counts.length; ++i)
-		{
-			counts[i] = Integer.valueOf(jtf[m_CreateOrderController.getIndexProducts(array.get(i), s)].getText());
-		}
-		String str = m_CreateOrderController.createOrderList(array, counts);
-		totalPrice = Integer.valueOf(str.substring(str.lastIndexOf(" ")).trim());
-		jta1.append(str);
+		return m_EditOrderController;
 	}
-	public int isCurrentCount()//++++
+	public void setM_EditOrderController(EditOrderController m_EditOrderController)
 	{
-		for(int i = 0; i < jtf.length; ++i)
-		{
-			if(jtf[i].isEnabled())
-			{
-				int count1 = Integer.valueOf(jtf[i].getText().trim());
-				int count2 = Integer.valueOf(s[i].substring(s[i].lastIndexOf(" ")).trim());
-				if(count1 > count2 || count1 <= 0)
-				{
-					return i;
-				}
-			}
-		}
-		return -1;
+		this.m_EditOrderController = m_EditOrderController;
+	}
+	public Client getClient() 
+	{
+		return client;
+	}
+	public void setClient(Client client)
+	{
+		this.client = client;
+	}
+	public void setArray(ArrayList<String> array)
+	{
+		this.array = array;
+	}
+	public void setVisible(boolean b)
+	{
+		jdl3.setVisible(true);
 	}
 }
