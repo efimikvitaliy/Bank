@@ -18,14 +18,15 @@ import Database.OrderDAO;
 public class EditOrderController
 {
 	private ClientsDAO m_ClientsDAO;
-	public CatalogForm m_CatalogForm;
-	public OrderForm m_OrderForm;
-	public ListOfOrderForm m_ListOfOrderForm;
-	public ListOfOrders m_ListOfOrders;
-	public Order m_Order;
-	public Catalog m_Catalog;
-	public CatalogDAO m_CatalogDAO;
-	public OrderDAO m_OrderDAO;
+	private CatalogForm m_CatalogForm;
+	private OrderForm m_OrderForm;
+	private ListOfOrderForm m_ListOfOrderForm;
+	private ListOfOrders m_ListOfOrders;
+	private Order m_Order;
+	private Catalog m_Catalog;
+	private CatalogDAO m_CatalogDAO;
+	private OrderDAO m_OrderDAO;
+	private CreateOrderController m_CreateOrderController;
 
 	public EditOrderController()
 	{
@@ -45,20 +46,21 @@ public class EditOrderController
 	{
 
 	}
-	public void showCatalogForm()
-	{
-		m_OrderForm.showProducts();
-	}
 	public void showListOfOrderForm(int i)
 	{
-		m_OrderForm = new OrderForm(this);
+		m_ListOfOrderForm = new ListOfOrderForm();
+		m_ListOfOrderForm.setM_EditOrderController(this);
 		if(i == 0)
 		{
-			m_OrderForm.showListOfOrderEdit();
+			m_ListOfOrderForm.setType(1);
+			m_ListOfOrderForm.initListOfOrders();
+			m_ListOfOrderForm.setVisible(true);
 		}
 		else if(i == 1)
 		{
-			m_OrderForm.showListOfOrderDelete();
+			m_ListOfOrderForm.setType(2);
+			m_ListOfOrderForm.initListOfOrders();
+			m_ListOfOrderForm.setVisible(true);
 		}
 	}
 	public void updateOrder(Order order) throws SQLException
@@ -75,10 +77,6 @@ public class EditOrderController
 	public Client getClient(String id) throws SQLException
 	{	
 		return m_ClientsDAO.getClient(id);
-	}
-	public ArrayList<String> getProductCountOrder(String id) throws SQLException
-	{
-		return m_CatalogDAO.getProductCountOrder(id);
 	}
 	public Catalog getCatalog() throws SQLException
 	{
@@ -102,5 +100,13 @@ public class EditOrderController
 	public void deleteProducts(String client_id, ArrayList<String> array) throws SQLException
 	{
 		m_OrderDAO.deleteProducts(client_id, array);
+	}
+	public CreateOrderController getM_CreateOrderController()
+	{
+		return m_CreateOrderController;
+	}
+	public void setM_CreateOrderController(CreateOrderController m_CreateOrderController)
+	{
+		this.m_CreateOrderController = m_CreateOrderController;
 	}
 }
