@@ -52,14 +52,14 @@ public class EditOrderController
 		m_ListOfOrderForm.setM_EditOrderController(this);
 		if(i == 0)
 		{
-			m_ListOfOrderForm.setType(1);
-			m_ListOfOrderForm.initListOfOrders();
+			//m_ListOfOrderForm.setType(1);
+			//m_ListOfOrderForm.initListOfOrders();
 			m_ListOfOrderForm.setVisible(true);
 		}
 		else if(i == 1)
 		{
-			m_ListOfOrderForm.setType(2);
-			m_ListOfOrderForm.initListOfOrders();
+			//m_ListOfOrderForm.setType(2);
+			//m_ListOfOrderForm.initListOfOrders();
 			m_ListOfOrderForm.setVisible(true);
 		}
 	}

@@ -56,6 +56,19 @@ public class OrderDAO
         stmt.close();
 		return array;
 	}
+	public ListOfOrders getListOfOrderForDeliver() throws SQLException
+	{
+		ListOfOrders array = new ListOfOrders();
+		stmt = con.createStatement();
+		r = stmt.executeQuery("SELECT * FROM TABLE_ORDER WHERE state = 1;");
+		while(r.next()){
+			Order order = new Order(r.getInt("id"), r.getInt("state"), r.getInt("deliverTransportCompany"), r.getInt("returnTransportCompany"), r.getInt("client_id"));
+			array.add(order);
+		}
+		r.close();
+        stmt.close();
+		return array;
+	}
 	public ListOfOrders getListOfOrderWithClient() throws SQLException
 	{
 		ListOfOrders array = new ListOfOrders();
@@ -73,9 +86,19 @@ public class OrderDAO
         stmt.close();
 	return array;
 	}
-	public ListOfOrders getListOfReturns()
+	public ListOfOrders getListOfReturns() throws SQLException
 	{
-		return null;
+		ListOfOrders array = new ListOfOrders();
+		stmt = con.createStatement();
+		r = stmt.executeQuery("SELECT * FROM TABLE_ORDER WHERE state = 3");
+		while(r.next()){
+			Order order = new Order(r.getInt("id"), r.getInt("state"), r.getInt("deliverTransportCompany"), r.getInt("returnTransportCompany"), r.getInt("client_id"));
+			array.add(order);
+		}
+        r.close();
+        stmt.close();
+        return array;
+		
 	}
 	public ListOfOrders getListOfSendOrder()
 	{
@@ -92,9 +115,16 @@ public class OrderDAO
 		stmt.close();
 		return order;
 	}
-	public Order getReturn(String name)
+	public Order getReturn(String id) throws SQLException
 	{
-		return null;
+		stmt = con.createStatement();
+		r = stmt.executeQuery("SELECT * FROM TABLE_ORDER WHERE id = " + id + ";");
+		Order order = null;
+		if(r.next()){
+			order = new Order(r.getInt("id"), r.getInt("state"), r.getInt("deliverTransportCompany"), r.getInt("returnTransportCompany"), r.getInt("client_id"));
+		}
+		stmt.close();
+		return order;
 	}
 	public void saveListOfOrders(ListOfOrders orders)
 	{
@@ -189,12 +219,14 @@ public class OrderDAO
 	public void saveOrderWithTransportCompany(Order order) throws SQLException
 	{
 		stmt = con.createStatement();
-		stmt.executeUpdate("UPDATE TABLE_ORDER SET deliverTransportCompany = " + order.getDeliverTransportCompany() + " WHERE id = " + order.getId());
+		stmt.executeUpdate("UPDATE TABLE_ORDER SET deliverTransportCompany = " + order.getDeliverTransportCompany() + " , state = 2 " + " WHERE id = " + order.getId());
 		stmt.close();
 	}
-	public void saveOrderWithTransportCompanyToReturn(Order order)
+	public void saveOrderWithTransportCompanyToReturn(Order order) throws SQLException
 	{
-
+		stmt = con.createStatement();
+		stmt.executeUpdate("UPDATE TABLE_ORDER SET returnTransportCompany = " + order.getReturnTransportCompany() + " , state = 4 " + " WHERE id = " + order.getId());
+		stmt.close();
 	}
 	public void saveReturn(Order order)
 	{

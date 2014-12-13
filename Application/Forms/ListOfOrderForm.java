@@ -37,16 +37,27 @@ public class ListOfOrderForm extends JPanel {
 		return m_EditOrderController;
 	}
 
+	/*
+	 * устанавливаем все контроллеры кроме нужного null
+	 * на обработке кнопки смотрим свой
+	 */
 	public void setM_EditOrderController(EditOrderController m_EditOrderController) {
+		m_AssignOrderTheTransportCompanyController = null;
+		m_AssignReturnTheTransportCompanyController = null;
+		m_OrderReturnController = null;
 		this.m_EditOrderController = m_EditOrderController;
 	}
 
 	public AssignOrderTheTransportCompanyController getM_AssignOrderTheTransportCompanyController() {
+		
 		return m_AssignOrderTheTransportCompanyController;
 	}
 
 	public void setM_AssignOrderTheTransportCompanyController(
 			AssignOrderTheTransportCompanyController m_AssignOrderTheTransportCompanyController) {
+		m_EditOrderController = null;
+		m_AssignReturnTheTransportCompanyController = null;
+		m_OrderReturnController = null;
 		this.m_AssignOrderTheTransportCompanyController = m_AssignOrderTheTransportCompanyController;
 	}
 
@@ -56,6 +67,9 @@ public class ListOfOrderForm extends JPanel {
 
 	public void setM_AssignReturnTheTransportCompanyController(
 			AssignReturnTheTransportCompanyController m_AssignReturnTheTransportCompanyController) {
+		m_EditOrderController = null;
+		m_AssignOrderTheTransportCompanyController = null;
+		m_OrderReturnController = null;
 		this.m_AssignReturnTheTransportCompanyController = m_AssignReturnTheTransportCompanyController;
 	}
 
@@ -65,6 +79,9 @@ public class ListOfOrderForm extends JPanel {
 
 	public void setM_OrderReturnController(
 			OrderReturnController m_OrderReturnController) {
+		m_EditOrderController = null;
+		m_AssignOrderTheTransportCompanyController = null;
+		m_AssignReturnTheTransportCompanyController = null;
 		this.m_OrderReturnController = m_OrderReturnController;
 	}
 
@@ -123,7 +140,10 @@ public class ListOfOrderForm extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				try {
-					m_AssignOrderTheTransportCompanyController.selectOrder(id.getText());
+					if(m_AssignOrderTheTransportCompanyController != null)
+						m_AssignOrderTheTransportCompanyController.selectOrder(id.getText());
+					if(m_AssignReturnTheTransportCompanyController != null)
+						m_AssignReturnTheTransportCompanyController.getSelectedReturn(id.getText());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

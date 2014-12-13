@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Application.Controllers.AssignOrderTheTransportCompanyController;
+import Application.Controllers.AssignReturnTheTransportCompanyController;
+import Application.Controllers.CreatingListOfTransportCompanyController;
+import Application.Controllers.EditListOfTtransportConpanyController;
 
 public class TransportManagerForm extends JFrame {
 	JButton AssignOrderButton;
@@ -109,6 +112,45 @@ public class TransportManagerForm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+			try{
+				AssignReturnTheTransportCompanyController controller = new AssignReturnTheTransportCompanyController();
+				JFrame frame = new JFrame("Assign Return The Transport Company");
+				ListOfOrderForm listOfOrderForm = new ListOfOrderForm();
+				
+				frame.setSize(500, 1000);
+				GridBagLayout layout = new GridBagLayout();
+				frame.setLayout(layout);
+				GridBagConstraints c = new GridBagConstraints();
+				
+				c.gridx = 1;
+				c.gridy = 1;
+				layout.setConstraints(listOfOrderForm, c);
+				frame.add(listOfOrderForm);
+				
+				OrderFormJustForm returnForm = new OrderFormJustForm();
+				
+				c.gridx = 1;
+				c.gridy = 2;
+				layout.setConstraints(returnForm, c);
+				frame.add(returnForm);
+				
+				ListOfTransportCompanyForm transForm = new ListOfTransportCompanyForm();
+				
+				c.gridx = 1;
+				c.gridy = 3;
+				layout.setConstraints(transForm, c);
+				frame.add(transForm);
+				
+				controller.setMainFrame(frame);
+				controller.m_ListOfOrderForm = listOfOrderForm;
+				controller.m_ReturnForm = returnForm;
+				controller.m_ListOfTransportCompanyForm = transForm;
+				frame.setVisible(true);
+				controller.startRoutine();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "SQLError");
+			}
 				
 			}});
 		CreateListOfTransportCompaniesButton.addActionListener(new ActionListener(){
@@ -116,6 +158,13 @@ public class TransportManagerForm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				CreatingListOfTransportCompanyController controller = new CreatingListOfTransportCompanyController();
+				try {
+					controller.startRoutine();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}});
 		EditListOfTransportComanies.addActionListener(new ActionListener(){
@@ -123,6 +172,14 @@ public class TransportManagerForm extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				try {
+					EditListOfTtransportConpanyController controller = new EditListOfTtransportConpanyController();
+
+					controller.startRoutine();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}});
 	}

@@ -52,6 +52,7 @@ public class AssignOrderTheTransportCompanyController {
 	 */
 	public void transportCompanySelected(TransportCompany company) throws SQLException{
 		m_Order.setDeliverTransportCompany(company.getTransportCompanyId());
+		m_Order.setState(2);
 		m_OrderDAO.saveOrderWithTransportCompany(m_Order);
 
 	}
@@ -62,7 +63,7 @@ public class AssignOrderTheTransportCompanyController {
 	public void startRoutine() throws SQLException{
 		m_OrderDAO = new OrderDAO();
 		m_TransportCompanyDAO = new TransportCompanyDAO();
-		m_ListOfOrders = m_OrderDAO.getListOfOrder();
+		m_ListOfOrders = m_OrderDAO.getListOfOrderForDeliver();
 		m_ListOfOrderForm.setM_AssignOrderTheTransportCompanyController(this);
 		m_ListOfOrderForm.displayListOfOrders(m_ListOfOrders);
 		m_ListOfTransportCompanyForm.m_AssignOrderTheTransportCompanyController = this;

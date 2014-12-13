@@ -1,4 +1,8 @@
 package Application.Controllers;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
+
 import BusinessService.Entities.*;
 import Application.Forms.*;
 import Database.*;
@@ -25,12 +29,37 @@ public class CreatingListOfTransportCompanyController {
 
 	}
 
-	public void createConfirm(){
-
+	public void createConfirm() throws SQLException{
+		m_TransportCompanyDAO.createListOfTransportCompaniesInDatabase();
 	}
 
-	public void isListNotCreated(){
+	public boolean isListNotCreated(){
+		try
+		{
+			m_TransportCompanyDAO = new TransportCompanyDAO();
+			m_TransportCompanyDAO.getListOfTransportCompanies();
+		}
+		catch(SQLException e1)
+		{
+			return true;
+		}
+		return false;
 
+	}
+	
+	public void startRoutine() throws SQLException{
+		if(isListNotCreated()){
+			int d = JOptionPane.showConfirmDialog(null, "Create list?", "Creating", JOptionPane.YES_NO_CANCEL_OPTION);
+			switch(d){
+			case 0:
+				createConfirm();
+				
+			}
+			
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "Just Created");
+		}
 	}
 
 }

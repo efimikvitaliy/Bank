@@ -26,20 +26,33 @@ public class TransportCompanyDAO {
 
 	}
 
-	public boolean createListOfTransportCompaniesInDatabase() {
+	public boolean createListOfTransportCompaniesInDatabase() throws SQLException {
+		stmt = con.createStatement();
+		stmt.executeUpdate("CREATE TABLE TRANSPORT_COMPANY(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT , name TEXT(300) , description TEXT(1000)  );");
+        //stmt.executeUpdate(" ALTER TABLE TABLE_ORDER ADD CONSTRAINT Relation1 FOREIGN KEY (deliverTransportCompany) REFERENCES TRANSPORT_COMPANY(id) ;");
+        //stmt.executeUpdate(" ALTER TABLE TABLE_ORDER ADD CONSTRAINT Relation2 FOREIGN KEY (returnTransportCompany) REFERENCES TRANSPORT_COMPANY(id) ;");
+        stmt.close();
 		return false;
 	}
 
-	public boolean deleteListOfTransportCompaniesInDatabase() {
+	public boolean deleteListOfTransportCompaniesInDatabase() throws SQLException {
+		stmt = con.createStatement();
+		stmt.executeUpdate("DROP TABLE TRANSPORT_COMPANY;");
+        stmt.close();
 		return false;
 	}
 
 	/**
 	 * 
 	 * @param company
+	 * @throws SQLException 
 	 */
 	public boolean deleteSelectedTransportCompanyFrowDatabase(
-			TransportCompany company) {
+			TransportCompany company) throws SQLException {
+		stmt = con.createStatement();
+		stmt.executeUpdate("DELETE FROM TRANSPORT_COMPANY WHERE id = " + company.getTransportCompanyId());
+        r.close();
+        stmt.close();
 		return false;
 	}
 
@@ -69,17 +82,25 @@ public class TransportCompanyDAO {
 	/**
 	 * 
 	 * @param company
+	 * @throws SQLException 
 	 */
 	public boolean saveChangesOfTransportCompanyInDatabase(
-			TransportCompany company) {
+			TransportCompany company) throws SQLException {
+		stmt = con.createStatement();
+		stmt.executeUpdate("UPDATE TRANSPORT_COMPANY SET name = '" + company.getName() + "' , description = '" + company.getDescription() + "' WHERE id = " + company.getTransportCompanyId());
+		stmt.close();
 		return false;
 	}
 
 	/**
 	 * 
 	 * @param company
+	 * @throws SQLException 
 	 */
-	public boolean saveNewTransportCompanyInDatabase(TransportCompany company) {
+	public boolean saveNewTransportCompanyInDatabase(TransportCompany company) throws SQLException {
+		stmt = con.createStatement();
+		stmt.executeUpdate("INSERT INTO TRANSPORT_COMPANY ( name , description) VALUES ( '" + company.getName() + "', '" + company.getDescription() + "')");
+		stmt.close();
 		return false;
 	}
 
