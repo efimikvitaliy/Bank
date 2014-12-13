@@ -19,6 +19,7 @@ import Database.OrderDAO;
 public class CreateOrderController
 {
 	private OrderDAO m_OrderDAO;
+	private EditOrderController m_EditOrderController; 
 	private ClientsDAO m_ClientsDAO;
 	private CatalogDAO m_CatalogDAO;
 	private Client m_Client;
@@ -28,12 +29,17 @@ public class CreateOrderController
 	private ListOfClientsForm m_ListOfClientsForm;
 	private static OrderForm m_OrderForm;
 	private ListOfClients m_ListOfClients;
+	private int type = -1;
 
 	public CreateOrderController()
 	{
 		m_OrderDAO = new OrderDAO();
 		m_ClientsDAO = new ClientsDAO();
 		m_CatalogDAO = new CatalogDAO();
+		m_ListOfClientsForm = new ListOfClientsForm();
+		setM_EditOrderController(new EditOrderController());
+		m_EditOrderController.setM_CreateOrderController(this);
+		m_CatalogForm = new CatalogForm();
 	}
 	public Catalog getCatalog() throws SQLException
 	{
@@ -60,12 +66,26 @@ public class CreateOrderController
 	}
 	public void showCatalogForm()
 	{
-		m_OrderForm.showProducts();
+		m_CatalogForm.setM_CreateOrderController(this);
+		m_CatalogForm.setM_EditOrderController(m_EditOrderController);
+		m_CatalogForm.init();
+		m_CatalogForm.setVisible(true);
+	}
+	public void showOrderForm()
+	{
+		m_OrderForm = new OrderForm();
+		m_OrderForm.setClient(m_Client);
+		m_OrderForm.init(m_CatalogForm.createOrderList());
+		m_OrderForm.setArray(m_CatalogForm.getArray());
+		m_OrderForm.setArrayCountsProducts(m_CatalogForm.getArrayCountsProducts());
+		m_OrderForm.setM_CreateOrderController(this);
+		m_OrderForm.setM_EditOrderController(m_EditOrderController);
+		m_OrderForm.setVisible(true);
 	}
 	public void showListOfClientsForm()
 	{
-		m_OrderForm = new OrderForm(this);
-		m_OrderForm.showClients();
+		m_ListOfClientsForm.setM_CreateOrderController(this);
+		m_ListOfClientsForm.setVisible(true);
 	}
 	public int getIndexProducts(String str, String s[])
 	{
@@ -116,5 +136,41 @@ public class CreateOrderController
 		}
 		Order order = new Order(totalPrice, arrayCatalogRecord, client);
 		return order;
+	}
+	public Client getM_Client()
+	{
+		return m_Client;
+	}
+	public void setM_Client(Client m_Client)
+	{
+		this.m_Client = m_Client;
+	}
+	public Catalog getM_Catalog()
+	{
+		return m_Catalog;
+	}
+	public void setM_Catalog(Catalog m_Catalog)
+	{
+		this.m_Catalog = m_Catalog;
+	}
+	public ArrayList<String> getProductCountOrder(String id) throws SQLException
+	{
+		return m_CatalogDAO.getProductCountOrder(id);
+	}
+	public EditOrderController getM_EditOrderController()
+	{
+		return m_EditOrderController;
+	}
+	public void setM_EditOrderController(EditOrderController m_EditOrderController)
+	{
+		this.m_EditOrderController = m_EditOrderController;
+	}
+	public int getType() 
+	{
+		return type;
+	}
+	public void setType(int type)
+	{
+		this.type = type;
 	}
 }
