@@ -20,10 +20,12 @@ public class ClientManagerForm
 	private JButton jb1;
 	private JButton jb2;
 	private JButton jb3;
+	private CreateOrderController contr;
 	
 	public ClientManagerForm()
 	{
 		jf = new JFrame("ManagerClients");
+		contr = new CreateOrderController();
 		jf.setSize(300,300);
 		jf.setLocation(100, 100);
 		jf.setResizable(false);
@@ -57,7 +59,7 @@ public class ClientManagerForm
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				CreateOrderController contr = new CreateOrderController();
+				contr.setType(1);
 				contr.showListOfClientsForm();
 			}
 		});
@@ -70,7 +72,8 @@ public class ClientManagerForm
 				int response = JOptionPane.showOptionDialog(jf, "Choice operation", "Operations",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, operation,
 						"edit");
-				EditOrderController ed = new EditOrderController();
+				EditOrderController ed = contr.getM_EditOrderController();
+				contr.setType(2);
 				switch(response)
 				{
 				case 0:
@@ -99,7 +102,6 @@ public class ClientManagerForm
 			}
 		});
 	}
-	
 	public void setVisible(boolean b)
 	{
 		jf.setVisible(b);
