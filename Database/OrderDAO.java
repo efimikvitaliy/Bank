@@ -100,9 +100,18 @@ public class OrderDAO
         return array;
 		
 	}
-	public ListOfOrders getListOfSendOrder()
+	public ListOfOrders getListOfSendOrder() throws SQLException
 	{
-		return null;
+		ListOfOrders array = new ListOfOrders();
+		stmt = con.createStatement();
+		r = stmt.executeQuery("SELECT * FROM TABLE_ORDER WHERE state = '2'");
+		while(r.next()){
+			Order order = new Order(r.getInt("id"), r.getInt("state"), r.getInt("deliverTransportCompany"), r.getInt("returnTransportCompany"), r.getInt("client_id"));
+			array.add(order);
+		}
+        r.close();
+        stmt.close();
+        return array;
 	}
 	public Order getOrder(String id) throws SQLException
 	{
@@ -228,9 +237,11 @@ public class OrderDAO
 		stmt.executeUpdate("UPDATE TABLE_ORDER SET returnTransportCompany = " + order.getReturnTransportCompany() + " , state = 4 " + " WHERE id = " + order.getId());
 		stmt.close();
 	}
-	public void saveReturn(Order order)
+	public void saveReturn(Order order) throws SQLException
 	{
-
+		stmt = con.createStatement();
+		stmt.executeUpdate("UPDATE TABLE_ORDER SET state = 3 " + " WHERE id = " + order.getId());
+		stmt.close();
 	}
 	public boolean isClientHasOrder(int id) throws SQLException//++++
 	{

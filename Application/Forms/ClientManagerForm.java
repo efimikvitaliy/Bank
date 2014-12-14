@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import Application.Controllers.CreateOrderController;
 import Application.Controllers.EditOrderController;
+import Application.Controllers.OrderReturnController;
 
 public class ClientManagerForm
 {
@@ -83,6 +84,17 @@ public class ClientManagerForm
 					ed.showListOfOrderForm(1);
 					break;
 				}
+			}
+		});
+		jb3.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				jf.setVisible(false);
+				OrderReturnController ed = new OrderReturnController();
+				ed.startRoutine();	
+				jf.setVisible(true);
 			}
 		});
 		jf.addWindowListener(new WindowAdapter()

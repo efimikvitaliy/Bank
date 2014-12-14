@@ -42,4 +42,8 @@ public class ListOfOrders
 		}
 		return s;
 	}
+	
+	public ArrayList<Order> getListOfOrder() {
+		return list;
+	}
 }

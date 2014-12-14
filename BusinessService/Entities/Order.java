@@ -99,6 +99,6 @@ public class Order
 	}
 	
 	public String toString(){
-		return Integer.toString(id) + " " + Integer.toString(state) + " " + Integer.toString(deliverTransportCompany) + " " + Integer.toString(returnTransportCompany) + " " + Integer.toString(client_id);
+		return "Order id = " + Integer.toString(id) + " Clien Id = " + Integer.toString(client_id);
 	}
 }
