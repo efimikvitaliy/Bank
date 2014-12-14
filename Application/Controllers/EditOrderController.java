@@ -2,10 +2,9 @@ package Application.Controllers;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import Application.Forms.CatalogForm;
-import Application.Forms.ListOfOrderForm;
 import Application.Forms.OrderForm;
+import Application.Forms.RecordOfOrderForm;
 import BusinessService.Entities.CatalogRecord;
 import BusinessService.Entities.Client;
 import BusinessService.Entities.ListOfOrders;
@@ -20,7 +19,7 @@ public class EditOrderController
 	private ClientsDAO m_ClientsDAO;
 	private CatalogForm m_CatalogForm;
 	private OrderForm m_OrderForm;
-	private ListOfOrderForm m_ListOfOrderForm;
+	private RecordOfOrderForm m_RecordOfOrderForm;
 	private ListOfOrders m_ListOfOrders;
 	private Order m_Order;
 	private Catalog m_Catalog;
@@ -48,19 +47,19 @@ public class EditOrderController
 	}
 	public void showListOfOrderForm(int i)
 	{
-		m_ListOfOrderForm = new ListOfOrderForm();
-		m_ListOfOrderForm.setM_EditOrderController(this);
+		m_RecordOfOrderForm = new RecordOfOrderForm();
+		m_RecordOfOrderForm.setM_EditOrderController(this);
 		if(i == 0)
 		{
-			//m_ListOfOrderForm.setType(1);
-			//m_ListOfOrderForm.initListOfOrders();
-			m_ListOfOrderForm.setVisible(true);
+			m_RecordOfOrderForm.setType(1);
+			m_RecordOfOrderForm.initListOfOrders();
+			m_RecordOfOrderForm.setVisible(true);
 		}
 		else if(i == 1)
 		{
-			//m_ListOfOrderForm.setType(2);
-			//m_ListOfOrderForm.initListOfOrders();
-			m_ListOfOrderForm.setVisible(true);
+			m_RecordOfOrderForm.setType(2);
+			m_RecordOfOrderForm.initListOfOrders();
+			m_RecordOfOrderForm.setVisible(true);
 		}
 	}
 	public void updateOrder(Order order) throws SQLException
