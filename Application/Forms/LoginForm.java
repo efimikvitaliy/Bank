@@ -145,7 +145,7 @@ public class LoginForm {
 	}
 
 	public static void showInterfaceOfCatalogManager() {
-		
+		new CatalogManagerForm().setVisible(true);
 	}
 
 	public static void showInterfaceOfClientManager() {

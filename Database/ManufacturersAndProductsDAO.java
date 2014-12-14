@@ -119,11 +119,36 @@ public class ManufacturersAndProductsDAO
 	}
 	public ListOfProducts getListOfProducts()
 	{
-		return null;
+		ListOfProducts array = new ListOfProducts();
+		try {
+			stmt = con.createStatement();r = stmt.executeQuery("SELECT PRODUCT.id, PRODUCT.name FROM PRODUCT");
+			while (r.next()) {
+				Product p = new Product(r.getInt("id"),	r.getString("name"));
+				array.add(p);
+			}
+			r.close();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return array;
 	}
-	public Product getProduct(String id)
+	public Product getProduct(int id)
 	{
-		return null;
+		Product p = null;
+		try {
+			stmt = con.createStatement();r = stmt.executeQuery("SELECT PRODUCT.id, PRODUCT.name FROM PRODUCT WHERE id = '" + id + "'");
+			while (r.next()) {
+				p = new Product(r.getInt("id"),	r.getString("name"));
+			}
+			r.close();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return p;
 	}
 	public void saveListOfManufacturersAndProducts(ListOfManufacturersAndProducts list)
 	{

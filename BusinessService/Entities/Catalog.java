@@ -7,7 +7,8 @@ public class Catalog
 	private String information;
 	private ArrayList<CatalogRecord> records;
 	public CatalogRecord m_CatalogRecord;
-
+	public int date;
+	public int id;
 	public Catalog()
 	{
 		records = new ArrayList<>();
@@ -23,6 +24,14 @@ public class Catalog
 	public String getInformation()
 	{
 		return information;
+	}
+	public void setDate(int newVal)
+	{
+		date = newVal;
+	}
+	public int getDate()
+	{
+		return date;
 	}
 	public void setInformation(String newVal)
 	{
@@ -48,5 +57,9 @@ public class Catalog
 	public void updateRecord(CatalogRecord record)
 	{
 
+	}
+	
+	public ArrayList<CatalogRecord> getCatalogRecords() {
+		return records;
 	}
 }

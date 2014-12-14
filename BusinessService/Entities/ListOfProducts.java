@@ -27,4 +27,8 @@ public class ListOfProducts
 	{
 		return products.get(index);
 	}
+	
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
 }

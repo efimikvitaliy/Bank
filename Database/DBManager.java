@@ -33,7 +33,7 @@ public class DBManager
         try
         {
             Class.forName("org.sqlite.JDBC");
-            String url = "jdbc:sqlite:C:/temp/bank.db";
+            String url = "jdbc:sqlite:e:/Program Files/Java/tplab2/bank.db";
             con = DriverManager.getConnection(url);
         }
         catch(Exception se)
